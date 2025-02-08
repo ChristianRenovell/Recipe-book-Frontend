@@ -1,4 +1,17 @@
-<button (click)="loginWithGoogle()">Iniciar sesión con Google</button>
-<button (click)="test()">test</button>
-<button (click)="registerWithEmailAndPassword()">Email register</button>
-<button (click)="loginWithEmailAndPassword()">Email login</button>
+
+<p-card>
+    <div class="flex">
+        <p-floatLabel>
+            <input pInputText id="username" />
+            <label for="username">Email</label>
+        </p-floatLabel>
+        <p-floatLabel>
+            <input pInputText id="username" />
+            <label for="username">Contraseña</label>
+        </p-floatLabel>
+        <p-button (click)="loginWithGoogle()">Iniciar sesión con Google</p-button>
+        <p-button (click)="registerWithEmailAndPassword()">Email register</p-button>
+        <p-button (click)="loginWithEmailAndPassword()">Email login</p-button>
+    </div>
+    
+</p-card>

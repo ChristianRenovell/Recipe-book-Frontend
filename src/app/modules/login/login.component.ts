@@ -10,11 +10,16 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import {  LoginService } from '../../services/login.service';
 import { LoginResponse } from '../../user.interface';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CheckboxModule, ButtonModule, InputTextModule, CardModule, FloatLabelModule],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
