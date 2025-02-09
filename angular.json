@@ -23,7 +23,8 @@
               "src/styles.css",
               "primeng/resources/themes/mdc-light-indigo/theme.css",
               "primeng/resources/primeng.min.css",
-              "primeicons/primeicons.css"
+              "primeicons/primeicons.css",
+              "primeflex/primeflex.css"
             ],
             "scripts": []
           },

@@ -20,6 +20,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   selector: 'app-login',
   standalone: true,
   imports: [CheckboxModule, ButtonModule, InputTextModule, CardModule, FloatLabelModule],
+  styleUrl: './login.component.scss',
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
