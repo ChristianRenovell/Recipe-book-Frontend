@@ -21,7 +21,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
-              "primeng/resources/themes/mdc-light-indigo/theme.css",
+              "primeng/resources/themes/lara-light-teal/theme.css",
               "primeng/resources/primeng.min.css",
               "primeicons/primeicons.css",
               "primeflex/primeflex.css"
