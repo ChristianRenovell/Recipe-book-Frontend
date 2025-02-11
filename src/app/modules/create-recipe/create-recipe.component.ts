@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { Ingredients } from '../../models/recipe.models';
 import { IngredientTableComponent } from '../ingredient-table/ingredient-table.component';
+import { CATEGORIES } from '../../constants/categories';
 
 @Component({
   selector: 'app-create-recipe',
@@ -44,10 +45,11 @@ export default class CreateRecipeComponent {
   formBuilder = inject(FormBuilder);
 
   ingredients = signal<Ingredients[]>([]);
+  categoryOptions = CATEGORIES;
 
   constructor() {
     this.form = this.formBuilder.group({
-      title: ['', { validators: [Validators.required] }],
+      title: ['', [Validators.required]],
       category: ['', [Validators.required]],
       description: ['', [Validators.required]],
       preparation: ['', [Validators.required]],
@@ -75,5 +77,19 @@ export default class CreateRecipeComponent {
     this.ingredients.update((elements) =>
       elements.filter((item) => item.id !== id)
     );
+  }
+
+  saveRecipe() {
+    if (this.form.valid) {
+      const body = {
+        ...this.form.value,
+        ingredients: this._removeTemporalId(this.ingredients()),
+      };
+      console.log(body);
+    }
+  }
+
+  private _removeTemporalId(ingredients: Ingredients[] | []) {
+    return ingredients.map(({ id, ...rest }) => rest);
   }
 }

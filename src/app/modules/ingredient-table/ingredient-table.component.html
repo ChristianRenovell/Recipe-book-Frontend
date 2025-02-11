@@ -1,26 +1,25 @@
-<p-table [value]="ingredients">
+<p-table [value]="ingredients" class="w-full">
   <ng-template pTemplate="header">
     <tr>
-      <th>Ingrediente</th>
-      <th>Cantidad</th>
-      <th>Observaciones</th>
-      <th></th>
+      <th class="w-3">Ingrediente</th>
+      <th class="w-2">Cantidad</th>
+      <th class="w-6">Observaciones</th>
+      <th class="w-1"></th> <!-- Establece un ancho fijo y alinea a la derecha -->
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-ingredient>
     <tr>
-      <td>{{ ingredient.ingredient }}</td>
-      <td>{{ ingredient.quantity }}</td>
-      <td>{{ ingredient.observations }}</td>
-      <td>
+      <td class="w-3">{{ ingredient.ingredient }}</td>
+      <td class="w-2">{{ ingredient.quantity }}</td>
+      <td class="w-6">{{ ingredient.observations }}</td>
+      <td class="text-right pr-2 w-1" >
         <p-button
-          size="small"
-          [rounded]="true"
-          styleClass="mr-2"
-          [raised]="true"
+          [text]="true"
+          rounded="true"
           severity="danger"
           icon="pi pi-trash"
           (click)="deleteIngredient(ingredient.id)"
+          
         />
       </td>
     </tr>

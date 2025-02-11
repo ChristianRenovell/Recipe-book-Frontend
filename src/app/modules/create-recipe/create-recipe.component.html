@@ -17,8 +17,10 @@
           <p-floatLabel>
             <p-dropdown
               id="category"
+              [options]="categoryOptions"
               formControlName="category"
               optionLabel="name"
+              optionValue="id"
               styleClass="w-full"
               inputId="id"
             />
@@ -79,6 +81,7 @@
                 </div>
                 <div class="col-12">
                   <p-button
+                    [disabled]="!this.formIngredients.valid"
                     [raised]="true"
                     styleClass="mr-2"
                     (click)="addIngredient()"
@@ -90,11 +93,11 @@
           </div>
         </form>
         @if(!!ingredients().length) {
-          <app-ingredient-table
-            class="w-full px-2"
-            [ingredients]="ingredients()"
-            (removeIngredient)="removeIngredient($event)"
-          />
+        <app-ingredient-table
+          class="w-full px-2"
+          [ingredients]="ingredients()"
+          (removeIngredient)="removeIngredient($event)"
+        />
         }
         <div class="col-12 mt-3">
           <p-floatLabel>
@@ -110,8 +113,12 @@
           </p-floatLabel>
         </div>
         <div class="col-12">
-          <p-button [raised]="true" styleClass="mr-2" (click)="addIngredient()"
-            >Añadir</p-button
+          <p-button
+            [disabled]="!this.form.valid"
+            [raised]="true"
+            styleClass="mr-2"
+            (click)="saveRecipe()"
+            >Guardar</p-button
           >
         </div>
       </div>
