@@ -1,69 +1,120 @@
 <div class="pt-3 flex justify-content-center">
-  <p-card header="Nueva receta" class="mt-4 w-6"> 
-    <div class="grid">
-      <div class="col-12">
-        <p-floatLabel>
-          <input pInputText id="name" class="w-full" />
-          <label for="name">Nombre de la receta</label>
-        </p-floatLabel>
-      </div>
-      <div class="col-12 mt-3">
-        <p-floatLabel>
-          <p-dropdown
-            optionLabel="name"
-            styleClass="w-full"
-            inputId="float-label"
-          />
-          <label for="float-label">Categoria</label>
-        </p-floatLabel>
-      </div>
-      <div class="col-12 mt-3">
-        <p-floatLabel>
-          <textarea rows="5" cols="70" class="w-full" pInputTextarea></textarea>
-          <label for="float-label">Descripción</label>
-        </p-floatLabel>
-      </div>
-      <div class="col-12 mt-3">
-        <p-toolbar>
-          <div class="grid">
-            <div class="col-6">
-              <p-floatLabel>
-                <input pInputText id="name" class="w-full" />
-                <label for="name">Ingrediente</label>
-              </p-floatLabel>
-            </div>
-            <div class="col-6">
-              <p-floatLabel>
-                <input pInputText id="name" class="w-full" />
-                <label for="name">Cantidad</label>
-              </p-floatLabel>
-            </div>
-            <div class="col-12">
-              <p-floatLabel>
-                <textarea
-                  rows="5"
-                  cols="70"
-                  class="w-full"
-                  pInputTextarea
-                ></textarea>
-                <label for="float-label">Preparación</label>
-              </p-floatLabel>
-            </div>
-            <div class="col-12">
-              <p-button styleClass="mr-2">Añadir</p-button>
-            </div>
+  <p-card header="Nueva receta" class="mt-4 w-6">
+    <form [formGroup]="form">
+      <div class="grid">
+        <div class="col-12">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="title"
+              class="w-full"
+              formControlName="title"
+            />
+            <label for="title">Nombre de la receta</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 mt-3">
+          <p-floatLabel>
+            <p-dropdown
+              id="category"
+              formControlName="category"
+              optionLabel="name"
+              styleClass="w-full"
+              inputId="id"
+            />
+            <label for="category">Categoria</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 mt-3">
+          <p-floatLabel>
+            <textarea
+              rows="5"
+              cols="70"
+              class="w-full"
+              id="description"
+              formControlName="description"
+              pInputTextarea
+            ></textarea>
+            <label for="description">Descripción</label>
+          </p-floatLabel>
+        </div>
+        <form [formGroup]="formIngredients">
+          <div class="col-12 mt-3">
+            <p-toolbar>
+              <div class="grid">
+                <div class="col-6 mt-3">
+                  <p-floatLabel>
+                    <input
+                      pInputText
+                      id="ingredient"
+                      class="w-full"
+                      formControlName="ingredient"
+                    />
+                    <label for="ingredient">Ingrediente</label>
+                  </p-floatLabel>
+                </div>
+                <div class="col-6 mt-3">
+                  <p-floatLabel>
+                    <input
+                      pInputText
+                      id="quantity"
+                      class="w-full"
+                      formControlName="quantity"
+                    />
+                    <label for="quantity">Cantidad</label>
+                  </p-floatLabel>
+                </div>
+                <div class="col-12 mt-3">
+                  <p-floatLabel>
+                    <textarea
+                      rows="5"
+                      cols="70"
+                      class="w-full"
+                      pInputTextarea
+                      id="observations"
+                      formControlName="observations"
+                    ></textarea>
+                    <label for="observations">Observaciones</label>
+                  </p-floatLabel>
+                </div>
+                <div class="col-12">
+                  <p-button
+                    [raised]="true"
+                    styleClass="mr-2"
+                    (click)="addIngredient()"
+                    >Añadir</p-button
+                  >
+                </div>
+              </div>
+            </p-toolbar>
           </div>
-        </p-toolbar>
+        </form>
+        @if(!!ingredients().length) {
+          <app-ingredient-table
+            class="w-full px-2"
+            [ingredients]="ingredients()"
+            (removeIngredient)="removeIngredient($event)"
+          />
+        }
+        <div class="col-12 mt-3">
+          <p-floatLabel>
+            <textarea
+              rows="5"
+              cols="70"
+              class="w-full"
+              pInputTextarea
+              id="preparation"
+              formControlName="preparation"
+            ></textarea>
+            <label for="preparation">Preparación</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12">
+          <p-button [raised]="true" styleClass="mr-2" (click)="addIngredient()"
+            >Añadir</p-button
+          >
+        </div>
       </div>
-      <div class="col-12 mt-3">
-        <p-floatLabel>
-          <textarea rows="5" cols="70" class="w-full" pInputTextarea></textarea>
-          <label for="float-label">Preparación</label>
-        </p-floatLabel>
-      </div>
-      <div class="col-12">
-        <p-button>Añadir</p-button>
-      </div>
-    </div>
+    </form>
   </p-card>
 </div>

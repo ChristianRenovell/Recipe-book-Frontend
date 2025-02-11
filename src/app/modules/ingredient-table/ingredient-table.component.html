@@ -1,0 +1,28 @@
+<p-table [value]="ingredients">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Ingrediente</th>
+      <th>Cantidad</th>
+      <th>Observaciones</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-ingredient>
+    <tr>
+      <td>{{ ingredient.ingredient }}</td>
+      <td>{{ ingredient.quantity }}</td>
+      <td>{{ ingredient.observations }}</td>
+      <td>
+        <p-button
+          size="small"
+          [rounded]="true"
+          styleClass="mr-2"
+          [raised]="true"
+          severity="danger"
+          icon="pi pi-trash"
+          (click)="deleteIngredient(ingredient.id)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
