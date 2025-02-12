@@ -20,6 +20,7 @@ import {
 import { Ingredients } from '../../models/recipe.models';
 import { IngredientTableComponent } from '../ingredient-table/ingredient-table.component';
 import { CATEGORIES } from '../../constants/categories';
+import { UploadComponent } from '../upload/upload.component';
 
 @Component({
   selector: 'app-create-recipe',
@@ -34,6 +35,7 @@ import { CATEGORIES } from '../../constants/categories';
     ButtonModule,
     ReactiveFormsModule,
     IngredientTableComponent,
+    UploadComponent
   ],
   templateUrl: './create-recipe.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
