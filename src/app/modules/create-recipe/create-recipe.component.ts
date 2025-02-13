@@ -21,6 +21,8 @@ import { Ingredients } from '../../models/recipe.models';
 import { IngredientTableComponent } from '../ingredient-table/ingredient-table.component';
 import { CATEGORIES } from '../../constants/categories';
 import { UploadComponent } from '../upload/upload.component';
+import { RecipeService } from '../../services/recipe.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-create-recipe',
@@ -35,7 +37,7 @@ import { UploadComponent } from '../upload/upload.component';
     ButtonModule,
     ReactiveFormsModule,
     IngredientTableComponent,
-    UploadComponent
+    UploadComponent,
   ],
   templateUrl: './create-recipe.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,21 +45,23 @@ import { UploadComponent } from '../upload/upload.component';
 export default class CreateRecipeComponent {
   form!: FormGroup;
   formIngredients!: FormGroup;
+  files: any = [];
 
-  formBuilder = inject(FormBuilder);
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly _recipeService = inject(RecipeService);
 
   ingredients = signal<Ingredients[]>([]);
   categoryOptions = CATEGORIES;
 
   constructor() {
-    this.form = this.formBuilder.group({
+    this.form = this._formBuilder.group({
       title: ['', [Validators.required]],
       category: ['', [Validators.required]],
       description: ['', [Validators.required]],
       preparation: ['', [Validators.required]],
     });
 
-    this.formIngredients = this.formBuilder.group({
+    this.formIngredients = this._formBuilder.group({
       ingredient: ['', { validators: [Validators.required] }],
       quantity: ['', [Validators.required]],
       observations: ['', [Validators.required]],
@@ -86,13 +90,17 @@ export default class CreateRecipeComponent {
       const body = {
         ...this.form.value,
         ingredients: this._removeTemporalId(this.ingredients()),
+        files: this.files,
       };
-      console.log(body);
+      this._recipeService
+        .createRecipes(body)
+        .pipe(finalize(() => alert('termine')))
+        .subscribe(()=> this.form.reset());
     }
   }
 
   getFiles(event: any) {
-    console.log(event)
+    this.files = event;
   }
 
   private _removeTemporalId(ingredients: Ingredients[] | []) {
