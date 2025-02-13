@@ -113,7 +113,7 @@
           </p-floatLabel>
         </div>
         <div class="col-12">
-          <app-upload />
+          <app-upload (emitFiles)="getFiles($event)"/>
         </div>
         <div class="col-12">
           <p-button

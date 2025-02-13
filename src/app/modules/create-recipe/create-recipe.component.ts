@@ -91,6 +91,10 @@ export default class CreateRecipeComponent {
     }
   }
 
+  getFiles(event: any) {
+    console.log(event)
+  }
+
   private _removeTemporalId(ingredients: Ingredients[] | []) {
     return ingredients.map(({ id, ...rest }) => rest);
   }
