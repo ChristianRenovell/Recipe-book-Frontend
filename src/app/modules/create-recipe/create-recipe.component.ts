@@ -87,17 +87,30 @@ export default class CreateRecipeComponent {
 
   saveRecipe() {
     if (this.form.valid) {
-      const body = {
-        ...this.form.value,
-        ingredients: this._removeTemporalId(this.ingredients()),
-        files: this.files,
-      };
+      const formData = new FormData();
+  
+      Object.keys(this.form.value).forEach((key) => {
+        formData.append(key, this.form.value[key]);
+      });
+  
+      formData.append('ingredients', JSON.stringify(this._removeTemporalId(this.ingredients())));
+  
+      console.log('Archivos antes de enviarlos:', this.files); // Verifica si hay archivos
+  
+      if (this.files && this.files.length > 0) {
+        this.files.forEach((file: File) => {
+          formData.append('files', file); 
+        });
+      }
+  
       this._recipeService
-        .createRecipes(body)
-        .pipe(finalize(() => alert('termine')))
-        .subscribe(()=> this.form.reset());
+        .createRecipes(formData)
+        .pipe(finalize(() => alert('Terminé')))
+        .subscribe(() => this.form.reset());
     }
   }
+  
+  
 
   getFiles(event: any) {
     this.files = event;
