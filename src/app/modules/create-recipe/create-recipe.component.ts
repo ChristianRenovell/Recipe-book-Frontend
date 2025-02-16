@@ -95,8 +95,6 @@ export default class CreateRecipeComponent {
   
       formData.append('ingredients', JSON.stringify(this._removeTemporalId(this.ingredients())));
   
-      console.log('Archivos antes de enviarlos:', this.files); // Verifica si hay archivos
-  
       if (this.files && this.files.length > 0) {
         this.files.forEach((file: File) => {
           formData.append('files', file); 
@@ -106,10 +104,12 @@ export default class CreateRecipeComponent {
       this._recipeService
         .createRecipes(formData)
         .pipe(finalize(() => alert('Terminé')))
-        .subscribe(() => this.form.reset());
+        .subscribe(() => {
+          this.form.reset()
+          this.files = []
+        });
     }
   }
-  
   
 
   getFiles(event: any) {
