@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./modules/home/home.component'),
     children: [
       {
+        path: 'search',
+        loadComponent: () => import('./modules/search/search.component'),
+      },
+      {
         canActivate: [authGuard], 
         path: 'create',
         loadComponent: () => import('./modules/create-recipe/create-recipe.component'),

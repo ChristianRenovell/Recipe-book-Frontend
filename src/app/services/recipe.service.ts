@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
+import { Recipe } from '../models/recipe.models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,11 @@ export class RecipeService {
     return this._http.post<any>(environment.apiUrl + '/recipe', body);
   }
 
-  getRecipes(id: any): Observable<any> {
-    return this._http.get<any>(environment.apiUrl + '/get-by-recipe-id/' + id);
+  getRecipe(id: any): Observable<any> {
+    return this._http.get<any>(environment.apiUrl + '/recipe/get-by-recipe-id/' + id);
+  }
+
+  getRecipes(): Observable<Recipe[]> {
+    return this._http.get<Recipe[]>(environment.apiUrl + '/recipe/get-all');
   }
 }

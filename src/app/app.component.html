@@ -1,2 +1,7 @@
+
+@if(loading()) {
+    <div class="flex justify-content-center align-items-center fixed w-12 h-full z-5 bg-opacity">
+        <p-progressSpinner ariaLabel="loading"  strokeWidth="4" />
+    </div>
+}
 <router-outlet></router-outlet>
-<p-toast />

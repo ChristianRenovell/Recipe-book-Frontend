@@ -1,0 +1,19 @@
+<div class="flex justify-content-center">
+    <p-card header="Recetas" class="w-8">
+        <div class="grid mt-2">
+            @for(recipe of recipes(); track recipe.title) {
+              <p-card [header]="recipe.title" class="col-3 cursor-pointer p-card-class border-round-sm">
+                  <ng-template pTemplate="header">
+                      <img alt="Card" [src]="recipe.image_url"  class="border-round-top-sm"/>
+                  </ng-template>
+                  <div class="flex justify-content-between align-items-center">
+                      <p>
+                          {{recipe.username}}
+                      </p>
+                      <p-tag severity="success" value="Success"/>
+                  </div>
+              </p-card>
+            }
+        </div>
+    </p-card>
+</div>

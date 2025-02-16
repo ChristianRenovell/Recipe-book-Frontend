@@ -23,6 +23,9 @@ import { CATEGORIES } from '../../constants/categories';
 import { UploadComponent } from '../upload/upload.component';
 import { RecipeService } from '../../services/recipe.service';
 import { finalize } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -38,8 +41,10 @@ import { finalize } from 'rxjs';
     ReactiveFormsModule,
     IngredientTableComponent,
     UploadComponent,
+    ToastModule
   ],
   templateUrl: './create-recipe.component.html',
+  providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateRecipeComponent {
@@ -49,6 +54,8 @@ export default class CreateRecipeComponent {
 
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _recipeService = inject(RecipeService);
+  private readonly _messageService = inject(MessageService);
+  private readonly _loadingService = inject(LoadingService);
 
   ingredients = signal<Ingredients[]>([]);
   categoryOptions = CATEGORIES;
@@ -87,6 +94,7 @@ export default class CreateRecipeComponent {
 
   saveRecipe() {
     if (this.form.valid) {
+      this._loadingService.show()
       const formData = new FormData();
   
       Object.keys(this.form.value).forEach((key) => {
@@ -103,10 +111,11 @@ export default class CreateRecipeComponent {
   
       this._recipeService
         .createRecipes(formData)
-        .pipe(finalize(() => alert('Terminé')))
+        .pipe(finalize(() => this._loadingService.hide()))
         .subscribe(() => {
           this.form.reset()
-          this.files = []
+          this.ingredients.set([])
+          this._messageService.add({ severity: 'success', summary: 'Guardada', detail: 'Receta guardada con éxito' });
         });
     }
   }

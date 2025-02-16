@@ -2,3 +2,19 @@
 body {
   background-color: #ebebeb;
 }
+
+.bg-opacity {
+  backdrop-filter: blur(4px);
+}
+
+.p-card .p-card-content {
+  padding: 0rem !important;
+}
+
+.p-card-class {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.p-card-class:hover {
+  transform: scale(1.05) translateY(-5px);
+}

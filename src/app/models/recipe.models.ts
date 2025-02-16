@@ -4,3 +4,11 @@ export interface Ingredients {
     quantity?: string;
     observations?: string;
 }
+
+export interface Recipe {
+    title: string;
+    image_url: string;
+    username: string | null;
+    category: number;
+  }
+  
