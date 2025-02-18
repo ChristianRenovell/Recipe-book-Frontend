@@ -92,7 +92,7 @@ export default class CreateRecipeComponent {
     );
   }
 
-  saveRecipe() {
+  onSaveRecipe() {
     if (this.form.valid) {
       this._loadingService.show()
       const formData = new FormData();

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { Recipe } from '../models/recipe.models';
+import { Recipe, RecipeFilter } from '../models/recipe.models';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +21,9 @@ export class RecipeService {
 
   getRecipes(): Observable<Recipe[]> {
     return this._http.get<Recipe[]>(environment.apiUrl + '/recipe/get-all');
+  }
+
+  searchRecipes(body: RecipeFilter): Observable<Recipe[]> {
+    return this._http.post<Recipe[]>(environment.apiUrl + '/recipe/filter', body);
   }
 }

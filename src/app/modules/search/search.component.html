@@ -1,19 +1,85 @@
 <div class="flex justify-content-center">
-    <p-card header="Recetas" class="w-8">
-        <div class="grid mt-2">
-            @for(recipe of recipes(); track recipe.title) {
-              <p-card [header]="recipe.title" class="col-3 cursor-pointer p-card-class border-round-sm">
-                  <ng-template pTemplate="header">
-                      <img alt="Card" [src]="recipe.image_url"  class="border-round-top-sm"/>
-                  </ng-template>
-                  <div class="flex justify-content-between align-items-center">
-                      <p>
-                          {{recipe.username}}
-                      </p>
-                      <p-tag severity="success" value="Success"/>
-                  </div>
-              </p-card>
-            }
+  <p-card header="Buscador" class="w-8 my-3">
+    <form [formGroup]="filterForm" class="pb-2 flex flex-column gap-3">
+      <div class="grid">
+        <div class="col-5 mt-3">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="title"
+              class="w-full"
+              formControlName="title"
+            />
+            <label for="title">Nombre</label>
+          </p-floatLabel>
         </div>
-    </p-card>
+        <div class="col-3 mt-3">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="author"
+              class="w-full"
+              formControlName="author"
+            />
+            <label for="author">Autor</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-2 mt-3">
+          <p-floatLabel>
+            <p-dropdown
+              filter="true"
+              id="category"
+              [options]="CATEGORIES"
+              formControlName="category"
+              optionLabel="name"
+              optionValue="id"
+              styleClass="w-full"
+              inputId="id"
+            />
+            <label for="category">Categoria</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-2 mt-3">
+          <p-button
+            [raised]="true"
+            styleClass="w-full justify-content-center gap-2 flex-row-reverse"
+            icon="pi pi-search"
+            (click)="onSearch()"
+            >Buscar</p-button
+          >
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<div class="flex justify-content-center">
+  <p-card header="Recetas" class="w-8">
+    <div class="grid mt-2">
+      @for(recipe of recipes(); track recipe.title) {
+      <p-card
+        [header]="recipe.title"
+        class="col-3 cursor-pointer p-card-class border-round-sm"
+      >
+        <ng-template pTemplate="header">
+          <div class="overflow-hidden">
+            <div
+              class="bg-cover border-round-top-sm bg-center h-9rem w-full"
+              style="background-image: url('{{ recipe.image_url }}');"
+            ></div>
+          </div>
+        </ng-template>
+        <div class="max-h-7rem">
+          <div class="flex">
+            <p-tag
+              [severity]="getCategorySeverrity(recipe.category)"
+              value="Caldero"
+            />
+          </div>
+          <p class="font-semibold">Autor: {{ recipe.username }}</p>
+        </div>
+      </p-card>
+      }
+    </div>
+  </p-card>
 </div>
