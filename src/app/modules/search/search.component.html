@@ -2,7 +2,7 @@
   <p-card header="Buscador" class="w-8 my-3">
     <form [formGroup]="filterForm" class="pb-2 flex flex-column gap-3">
       <div class="grid">
-        <div class="col-5 mt-3">
+        <div class="col-4 mt-3">
           <p-floatLabel>
             <input
               pInputText
@@ -39,14 +39,24 @@
             <label for="category">Categoria</label>
           </p-floatLabel>
         </div>
-        <div class="col-2 mt-3">
-          <p-button
-            [raised]="true"
-            styleClass="w-full justify-content-center gap-2 flex-row-reverse"
-            icon="pi pi-search"
-            (click)="onSearch()"
-            >Buscar</p-button
-          >
+        <div class="col-3 mt-3">
+          <div class="">
+            <p-button
+              [raised]="true"
+              styleClass="w-7 justify-content-center gap-2 flex-row-reverse"
+              icon="pi pi-search"
+              (click)="onSearch()"
+              >Buscar</p-button
+            >
+            <p-button
+              [text]="true"
+              severity="danger"
+              styleClass="w-5 justify-content-center gap-2 flex-row-reverse"
+              icon="pi pi-trash"
+              (click)="filterForm.reset()"
+              >Limpiar</p-button
+            >
+          </div>
         </div>
       </div>
     </form>
@@ -60,6 +70,7 @@
       <p-card
         [header]="recipe.title"
         class="col-3 cursor-pointer p-card-class border-round-sm"
+        (click)="onGoToDetail(recipe.recipe_id!)"
       >
         <ng-template pTemplate="header">
           <div class="overflow-hidden">
@@ -73,7 +84,7 @@
           <div class="flex">
             <p-tag
               [severity]="getCategorySeverrity(recipe.category)"
-              value="Caldero"
+              [value]="getCategoryName(recipe.category)"
             />
           </div>
           <p class="font-semibold">Autor: {{ recipe.username }}</p>

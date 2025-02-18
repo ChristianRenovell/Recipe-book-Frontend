@@ -6,6 +6,7 @@ export interface Ingredients {
 }
 
 export interface Recipe {
+  recipe_id?: number;
   title: string;
   image_url: string;
   username: string | null;

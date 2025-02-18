@@ -3,6 +3,11 @@ import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'search',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadComponent: () => import('./modules/login/login.component'),
   },
@@ -18,6 +23,10 @@ export const routes: Routes = [
         canActivate: [authGuard], 
         path: 'create',
         loadComponent: () => import('./modules/create-recipe/create-recipe.component'),
+      },
+      {
+        path: 'detail/:id',
+        loadComponent: () => import('./modules/detail/detail.component'),
       },
     ]
   },

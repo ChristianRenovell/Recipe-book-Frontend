@@ -20,6 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -40,6 +41,7 @@ export default class SearchComponent {
   private readonly _recipeService = inject(RecipeService);
   private readonly _loadingService = inject(LoadingService);
   private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
 
   recipes = signal<Recipe[] | null>(null);
 
@@ -72,6 +74,10 @@ export default class SearchComponent {
       .subscribe(this.recipes.set);
   }
 
+  onGoToDetail(recipe_id: number) {
+    this._router.navigate(['detail', recipe_id]);
+  }
+
   getCategorySeverrity(
     category: number
   ): 'success' | 'secondary' | 'info' | 'warning' | 'danger' | 'contrast' {
@@ -79,5 +85,14 @@ export default class SearchComponent {
       (element) => element.id === category
     )?.severity;
     return !!severity ? severity : 'success';
+  }
+
+  getCategoryName(
+    category: number
+  ): string {
+    const severity = CATEGORIES.find(
+      (element) => element.id === category
+    )?.name;
+    return !!severity ? severity : '';
   }
 }
