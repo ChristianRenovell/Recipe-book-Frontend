@@ -10,11 +10,12 @@ import { CardModule } from 'primeng/card';
 import { RecipeService } from '../../services/recipe.service';
 import { LoadingService } from '../../core/services/loading.service';
 import { finalize } from 'rxjs/operators';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [CardModule],
+  imports: [CardModule, ImageModule],
   templateUrl: './detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,6 +25,7 @@ export default class DetailComponent {
   private readonly _loadingService = inject(LoadingService);
 
   recipe_id = signal<string | null>(null);
+  recipe = signal<any | null>(null)
 
   constructor() {
     this._route.paramMap.subscribe((params: any) => {
@@ -37,6 +39,6 @@ export default class DetailComponent {
     this._recipeService
       .getRecipe(recipe_id)
       .pipe(finalize(() => this._loadingService.hide()))
-      .subscribe(result => console.log(result));
+      .subscribe(this.recipe.set);
   }
 }
