@@ -7,7 +7,6 @@ import {
 import { CardModule } from 'primeng/card';
 import { RecipeService } from '../../services/recipe.service';
 import {
-  CategoryModel,
   Recipe,
   RecipeFilter,
 } from '../../models/recipe.models';

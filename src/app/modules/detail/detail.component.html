@@ -1,17 +1,22 @@
 <div class="flex justify-content-center">
   <p-card class="w-8">
+    @if(!isLoading()) {
     <div class="p-4">
-
       <div class="flex justify-content-between">
         <div class="w-6">
           <div class="font-semibold text-4xl">
             {{ recipe()?.title }}
           </div>
-          <div class="flex justify-content-start my-4">
+          <div class="flex justify-content-start align-items-center my-4">
             <div class="text-xl mr-2">Autor:</div>
             <div class="font-semibold text-xl">
               {{ recipe()?.author }}
             </div>
+            <p-tag
+              class="ml-4"
+              [severity]="getCategorySeverrity(recipe()?.category!)"
+              [value]="getCategoryName(recipe()?.category!)"
+            />
           </div>
           <div>
             <div class="font-semibold text-4xl my-4">Descripcion</div>
@@ -31,7 +36,10 @@
       </div>
       <div class="pt-5">
         <div class="font-semibold text-4xl my-3">Ingredientes</div>
-        <p-table [value]="ingredients()" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table
+          [value]="ingredients()"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
           <ng-template pTemplate="header">
             <tr class="flex">
               <th class="w-3">Ingrediente</th>
@@ -52,6 +60,16 @@
         <div class="font-semibold text-4xl my-3">Preparación</div>
         {{ recipe()?.preparation }}
       </div>
+    </div>
+    }
+    <div class="flex justify-content-end">
+      <p-button
+        label="Volver"
+        icon="pi pi-angle-left"
+        iconPos="right"
+        [outlined]="true"
+        (click)="onReturn()"
+      />
     </div>
   </p-card>
 </div>

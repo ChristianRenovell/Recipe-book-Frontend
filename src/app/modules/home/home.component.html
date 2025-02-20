@@ -1,4 +1,13 @@
-<div class="flex justify-content-center mt-4">
-    <img src="assets/img/logos.png"  alt="logo" class="w-1"/>
+<div class="p-3" style="position: absolute;">
+    <p-speedDial
+      [model]="items"
+      radius="120"
+      direction="down-right"
+      type="quarter-circle"
+      buttonClassName="p-button-success"
+    />
+</div>
+<div class="flex justify-content-center">
+    <img src="assets/img/logos.png" alt="logo" class="w-1" />
 </div>
 <router-outlet></router-outlet>
