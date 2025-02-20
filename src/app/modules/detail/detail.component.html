@@ -1,31 +1,57 @@
 <div class="flex justify-content-center">
   <p-card class="w-8">
-    <div class="flex justify-content-between">
-      <div class="w-6">
-        <div class="font-semibold text-4xl">
-          {{ recipe().title }}
+    <div class="p-4">
+
+      <div class="flex justify-content-between">
+        <div class="w-6">
+          <div class="font-semibold text-4xl">
+            {{ recipe()?.title }}
+          </div>
+          <div class="flex justify-content-start my-4">
+            <div class="text-xl mr-2">Autor:</div>
+            <div class="font-semibold text-xl">
+              {{ recipe()?.author }}
+            </div>
+          </div>
+          <div>
+            <div class="font-semibold text-4xl my-4">Descripcion</div>
+            {{ recipe()?.description }}
+          </div>
         </div>
-        <div class="text-xl mr-3">Autor:</div>
-        <div class="font-semibold text-xl">
-          {{ recipe().author }}
+        <div class="flex justify-content-end w-6">
+          <p-image
+            src="{{ recipe()?.image_url }}"
+            alt="Image"
+            [preview]="true"
+            class="w-full flex justify-content-end"
+            width="100%"
+            [style]="{ display: 'block', width: '80%', height: '100%' }"
+          />
         </div>
       </div>
-      <div class="flex justify-content-center w-6">
-        <p-image
-          src="{{ recipe().image_url }}"
-          alt="Image"
-          [preview]="true"
-          class="w-full"
-          width="100%"
-          [style]="{ display: 'block', width: '80%', height: '100%' }"
-        />
+      <div class="pt-5">
+        <div class="font-semibold text-4xl my-3">Ingredientes</div>
+        <p-table [value]="ingredients()" [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header">
+            <tr class="flex">
+              <th class="w-3">Ingrediente</th>
+              <th class="w-2">Cantidad</th>
+              <th class="w-7">Observaciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr class="flex">
+              <td class="w-3">{{ product.ingredient }}</td>
+              <td class="w-2">{{ product.quantity }}</td>
+              <td class="w-7">{{ product.observations }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
-    </div>
-    <div>
-      <div class="font-semibold text-4xl my-3">
-       Descripcion
+      <div class="py-5 mb-3">
+        <div class="font-semibold text-4xl my-3">Preparación</div>
+        {{ recipe()?.preparation }}
       </div>
-      {{ recipe().description }}
     </div>
   </p-card>
 </div>

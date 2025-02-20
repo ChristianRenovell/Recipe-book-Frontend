@@ -15,8 +15,8 @@ export class RecipeService {
     return this._http.post(environment.apiUrl + '/recipe', body);
   }
 
-  getRecipe(id: number): Observable<Recipe[]> {
-    return this._http.get<Recipe[]>(environment.apiUrl + '/recipe/get-by-recipe-id/' + id);
+  getRecipe(id: number): Observable<Recipe> {
+    return this._http.get<Recipe>(environment.apiUrl + '/recipe/get-by-recipe-id/' + id);
   }
 
   getRecipes(): Observable<Recipe[]> {

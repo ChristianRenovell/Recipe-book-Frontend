@@ -10,7 +10,11 @@ export interface Recipe {
   title: string;
   image_url: string;
   username: string | null;
+  author: string | null;
+  description: string | null;
+  ingredients: Ingredients[] | null;
   category: number;
+  preparation: string | null
 }
 
 export interface CategoryModel {
