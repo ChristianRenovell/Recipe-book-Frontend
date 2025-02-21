@@ -1,8 +1,8 @@
 <div class="flex justify-content-center">
-  <p-card header="Nueva receta" class="w-8">
+  <p-card header="Nueva receta" class="w-8 m-3">
     <form [formGroup]="form">
       <div class="grid">
-        <div class="col-12">
+        <div class="col-12 mt-3">
           <p-floatLabel>
             <input
               pInputText
@@ -70,7 +70,7 @@
                   <p-floatLabel>
                     <textarea
                       rows="5"
-                      cols="70"
+                      cols="500"
                       class="w-full"
                       pInputTextarea
                       id="observations"
@@ -113,7 +113,7 @@
           </p-floatLabel>
         </div>
         <div class="col-12">
-          <app-upload (emitFiles)="getFiles($event)"/>
+          <app-upload (emitFiles)="getFiles($event)" [urlImage]="urlImage()"/>
         </div>
         <div class="col-12">
           <p-button

@@ -37,6 +37,7 @@ export default class DetailComponent {
   recipe = signal<Recipe | null>(null);
   ingredients = signal<Ingredients[]>([]);
   isLoading = signal<boolean>(true);
+  
   constructor() {
     this._route.paramMap.subscribe((params: any) => {
       const recipe_id = +params.get('id');
