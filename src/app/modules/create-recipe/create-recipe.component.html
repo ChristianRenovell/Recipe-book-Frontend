@@ -113,9 +113,9 @@
           </p-floatLabel>
         </div>
         <div class="col-12">
-          <app-upload (emitFiles)="getFiles($event)" [urlImage]="urlImage()"/>
+          <app-upload (emitFiles)="getFiles($event)" [urlImage]="urlImage()" />
         </div>
-        <div class="col-12">
+        <div class="col-12 flex justify-content-between">
           <p-button
             [disabled]="!this.form.valid"
             [raised]="true"
@@ -123,9 +123,18 @@
             (click)="onSaveRecipe()"
             >Guardar</p-button
           >
+          <p-button
+            [disabled]="!this.form.valid"
+            [raised]="true"
+            severity="danger"
+            styleClass="mr-2"
+            (click)="onDelete()"
+            >Eliminar</p-button
+          >
         </div>
       </div>
     </form>
   </p-card>
 </div>
+<p-confirmDialog />
 <p-toast />

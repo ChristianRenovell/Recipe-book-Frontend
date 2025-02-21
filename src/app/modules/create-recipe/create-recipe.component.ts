@@ -24,10 +24,11 @@ import { CATEGORIES, EDIT_MODE } from '../../constants/categories';
 import { UploadComponent } from '../upload/upload.component';
 import { RecipeService } from '../../services/recipe.service';
 import { finalize } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { LoadingService } from '../../core/services/loading.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-create-recipe',
@@ -44,9 +45,10 @@ import { ActivatedRoute, Router } from '@angular/router';
     IngredientTableComponent,
     UploadComponent,
     ToastModule,
+    ConfirmDialogModule
   ],
   templateUrl: './create-recipe.component.html',
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateRecipeComponent {
@@ -58,6 +60,7 @@ export default class CreateRecipeComponent {
   private readonly _loadingService = inject(LoadingService);
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
+  private readonly _confirmationService = inject(ConfirmationService);
 
   ingredients = signal<Ingredients[]>([]);
   urlImage = signal<string | null>(null);
@@ -138,11 +141,8 @@ export default class CreateRecipeComponent {
         JSON.stringify(this._removeTemporalId(this.ingredients()))
       );
 
-      if(this.recipe_id) {
-        formData.append(
-          'recipe_id',
-          JSON.stringify(this.recipe_id)
-        );
+      if (this.recipe_id) {
+        formData.append('recipe_id', JSON.stringify(this.recipe_id));
       }
 
       if (this.files && this.files.length > 0) {
@@ -151,9 +151,9 @@ export default class CreateRecipeComponent {
         });
       }
       if (this.accessType === EDIT_MODE) {
-        this._updateRecipe(formData)
+        this._updateRecipe(formData);
       } else {
-        this._createRecipe(formData)
+        this._createRecipe(formData);
       }
     }
   }
@@ -166,7 +166,7 @@ export default class CreateRecipeComponent {
         this.form.reset();
         this.ingredients.set([]);
         this._showRecipe();
-        this._goToDetall(result.recipe.recipe_id)
+        this._goToDetall(result.recipe.recipe_id);
       });
   }
 
@@ -178,7 +178,7 @@ export default class CreateRecipeComponent {
         this.form.reset();
         this.ingredients.set([]);
         this._showRecipe();
-        this._goToDetall(result.recipe.recipe_id)
+        this._goToDetall(result.recipe.recipe_id);
       });
   }
 
@@ -190,12 +190,32 @@ export default class CreateRecipeComponent {
     });
   }
 
-  private _goToDetall(recipe_id:number) {
+  private _goToDetall(recipe_id: number) {
     this._router.navigate(['detail/' + recipe_id]);
   }
 
   getFiles(event: any) {
     this.files = event;
+  }
+
+  onDelete() {
+    this._confirmationService.confirm({
+      message: '¿Estás seguro de querer eliminar la receta?',
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Eliminar',
+      rejectLabel: 'Cancelar',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this._loadingService.show();
+        this._recipeService
+          .deleteRecipes(this.recipe_id)
+          .pipe(finalize(() => this._loadingService.hide()))
+          .subscribe();
+      },
+    });
   }
 
   private _removeTemporalId(ingredients: Ingredients[] | []) {

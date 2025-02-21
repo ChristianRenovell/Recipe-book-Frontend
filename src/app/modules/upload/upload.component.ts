@@ -49,24 +49,25 @@ export class UploadComponent implements OnChanges {
   }
 
   onSelectedFiles(event: any) {
-    const file = event.files[0];
-    if (!file) return;
-    const newFile = {
-      file,
-      objectURL: URL.createObjectURL(file),
-      name: file.name,
-      blob: file,
-    };
-
-    this.files = [...this.files, newFile].slice(0, 1);
-    this.fileUpload.files = this.files.map((f: { file: any }) => f.file);
-
-    this.emitFiles.emit({
-      files: this.files,
-      blobs: this.files.map((f: { blob: any }) => f.blob),
+    const files = event.files;
+    if (!files || files.length === 0) return;
+  
+    const newFiles = Array.from(files).map((file: any) => {
+      return {
+        file,
+        objectURL: URL.createObjectURL(file), 
+        name: file.name,
+        blob: file, 
+      };
     });
+    this.files = [...this.files, ...newFiles].slice(0, 1);
+    const filesTuSend = [...this.fileUpload.files];
+  
+    this.emitFiles.emit(filesTuSend);
+  
     this.totalSizePercent = (this.files.length / 1) * 100;
   }
+  
 
   onRemoveTemplatingFile(event: any, removeFileCallback: any, index: number) {
     removeFileCallback(event, index);

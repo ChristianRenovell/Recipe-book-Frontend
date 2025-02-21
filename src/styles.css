@@ -12,9 +12,29 @@ body {
 }
 
 .p-card-class {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .p-card-class:hover {
-  transform: scale(1.05) translateY(-5px);
+  transform: scale(1.01) translateY(-2px);
+}
+
+.truncate-title {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.custom-tooltip {
+  max-width: 100%;
+}
+
+.card-custom .p-card .p-card-body {
+  padding-top: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }

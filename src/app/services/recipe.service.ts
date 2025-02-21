@@ -19,6 +19,10 @@ export class RecipeService {
     return this._http.put(environment.apiUrl + '/recipe', body);
   }
 
+  deleteRecipes(recipe_id: any) {
+    return this._http.delete(environment.apiUrl + '/recipe/' + recipe_id);
+  }
+
   getRecipe(id: number): Observable<Recipe> {
     return this._http.get<Recipe>(environment.apiUrl + '/recipe/get-by-recipe-id/' + id);
   }

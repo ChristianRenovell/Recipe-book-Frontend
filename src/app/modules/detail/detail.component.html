@@ -18,6 +18,13 @@
               [value]="getCategoryName(recipe()?.category!)"
             />
           </div>
+          <p-button
+            [outlined]="true"
+            label="Editar"
+            icon="pi pi-pencil"
+            iconPos="right"
+            (click)="onGoToEdit()"
+          />
           <div>
             <div class="font-semibold text-4xl my-4">Descripcion</div>
             {{ recipe()?.description }}
@@ -62,12 +69,12 @@
       </div>
     </div>
     }
-    <div class="flex justify-content-end">
+    <div class="flex justify-content-end p-4">
       <p-button
         label="Volver"
         icon="pi pi-angle-left"
         iconPos="right"
-        [outlined]="true"
+        [text]="true"
         (click)="onReturn()"
       />
     </div>

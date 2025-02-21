@@ -1,5 +1,5 @@
 <div class="flex justify-content-center">
-  <p-card header="Buscador" class="w-8 my-3">
+  <p-card header="Buscador" class="w-8 my-3 ">
     <form [formGroup]="filterForm" class="pb-2 flex flex-column gap-3">
       <div class="grid">
         <div class="col-4 mt-3">
@@ -40,36 +40,34 @@
           </p-floatLabel>
         </div>
         <div class="col-3 mt-3">
-          <div class="">
-            <p-button
-              [raised]="true"
-              styleClass="w-7 justify-content-center gap-2 flex-row-reverse"
-              icon="pi pi-search"
-              (click)="onSearch()"
-              >Buscar</p-button
-            >
-            <p-button
-              [text]="true"
-              severity="danger"
-              styleClass="w-5 justify-content-center gap-2 flex-row-reverse"
-              icon="pi pi-trash"
-              (click)="filterForm.reset()"
-              >Limpiar</p-button
-            >
-          </div>
+          <p-button
+            [raised]="true"
+            styleClass="w-7 gap-2 justify-content-center flex-row-reverse"
+            icon="pi pi-search"
+            (click)="onSearch()"
+            >Buscar</p-button
+          >
+          <p-button
+            [text]="true"
+            severity="danger"
+            styleClass="w-5 gap-2 justify-content-center flex-row-reverse"
+            icon="pi pi-trash"
+            (click)="filterForm.reset()"
+            >Limpiar</p-button
+          >
         </div>
       </div>
     </form>
   </p-card>
 </div>
 
-<div class="flex justify-content-center">
+<div class="flex justify-content-center mb-6">
   <p-card header="Recetas" class="w-8">
     <div class="grid mt-2">
       @for(recipe of recipes(); track recipe.title) {
+
       <p-card
-        [header]="recipe.title"
-        class="col-3 cursor-pointer p-card-class border-round-sm"
+        class="col-4 cursor-pointer p-card-class border-round-sm card-custom"
         (click)="onGoToDetail(recipe.recipe_id!)"
       >
         <ng-template pTemplate="header">
@@ -78,18 +76,27 @@
               class="bg-cover border-round-top-sm bg-center h-9rem w-full"
               style="background-image: url('{{ recipe.image_url }}');"
             ></div>
+            <p
+              class="truncate-title text-xl font-semibold px-3"
+              [pTooltip]="recipe.title"
+              tooltipPosition="top"
+              tooltipStyleClass="custom-tooltip"
+            >
+              {{ recipe.title }}
+            </p>
           </div>
         </ng-template>
-        <div class="max-h-7rem">
+        <div class="max-h-6rem">
+          <p class="font-semibold">Autor: {{ recipe.username }}</p>
           <div class="flex">
             <p-tag
               [severity]="getCategorySeverrity(recipe.category)"
               [value]="getCategoryName(recipe.category)"
             />
           </div>
-          <p class="font-semibold">Autor: {{ recipe.username }}</p>
         </div>
       </p-card>
+
       }
     </div>
   </p-card>

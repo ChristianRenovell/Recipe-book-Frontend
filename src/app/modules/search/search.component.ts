@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { Router } from '@angular/router';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-search',
@@ -32,6 +33,7 @@ import { Router } from '@angular/router';
     ButtonModule,
     ReactiveFormsModule,
     FloatLabelModule,
+    TooltipModule
   ],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

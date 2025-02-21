@@ -33,15 +33,15 @@ export default class DetailComponent {
 
   protected readonly CATEGORIES = CATEGORIES;
 
-  recipe_id = signal<string | null>(null);
+  protected recipe_id!:number;
   recipe = signal<Recipe | null>(null);
   ingredients = signal<Ingredients[]>([]);
   isLoading = signal<boolean>(true);
   
   constructor() {
     this._route.paramMap.subscribe((params: any) => {
-      const recipe_id = +params.get('id');
-      this._getRecipeDetail(recipe_id);
+      this.recipe_id = +params.get('id');
+      this._getRecipeDetail(this.recipe_id);
     });
   }
 
@@ -79,5 +79,9 @@ export default class DetailComponent {
 
   onReturn() {
     this._router.navigate(['search']);
+  }
+
+  onGoToEdit() {
+    this._router.navigate(['edit/' + this.recipe_id ]);
   }
 }
