@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ export default class LoginComponent implements OnInit {
 
 
   private _loginServices = inject(LoginService)
+  private readonly _router = inject(Router);
 
   ngOnInit(): void {
     initializeApp(environment.firebaseConfig);
@@ -44,14 +46,14 @@ export default class LoginComponent implements OnInit {
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
         localStorage.setItem("token", result.token);
       });
+      this._goToSearch()
     } catch (error) {
       console.error("Error en loginWithGoogle:", error);
     }
   }
-  test() {
-    this._loginServices.test().subscribe(()=>{
-      alert('aaa')
-     })
+
+  private _goToSearch() {
+    this._router.navigate(['search']);
   }
 
   async loginWithEmailAndPassword() {
@@ -63,6 +65,7 @@ export default class LoginComponent implements OnInit {
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
         localStorage.setItem("token", result.token);
       });
+      this._goToSearch()
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +80,7 @@ export default class LoginComponent implements OnInit {
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
         localStorage.setItem("token", result.token);
       });
+      this._goToSearch()
     } catch (error) {
       console.error(error);
     }

@@ -213,7 +213,7 @@ export default class CreateRecipeComponent {
         this._recipeService
           .deleteRecipes(this.recipe_id)
           .pipe(finalize(() => this._loadingService.hide()))
-          .subscribe();
+          .subscribe(()=>  this._router.navigate(['search']));
       },
     });
   }
