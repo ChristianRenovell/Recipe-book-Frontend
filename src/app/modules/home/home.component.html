@@ -4,7 +4,9 @@
 <div class="flex justify-content-center">
   <p-card class="w-8 mt-3 gap-3">
     <p-button label="Buscador" icon="pi pi-search" [text]="true" (click)="onGoToSearch()"/>
-    <p-button label="Crear receta" icon="pi pi-plus" [text]="true" (click)="onGoToNew()" />
+    @if(isAdmin()) {
+      <p-button label="Crear receta" icon="pi pi-plus" [text]="true" (click)="onGoToNew()" />
+    }
   </p-card>
 </div>
 <router-outlet></router-outlet>

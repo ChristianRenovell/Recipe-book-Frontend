@@ -46,6 +46,7 @@ export default class SearchComponent {
 
   recipes = signal<Recipe[] | null>(null);
 
+
   protected filterForm = this._fb.group({
     author: ['' as string | null],
     category: [null as number | null],

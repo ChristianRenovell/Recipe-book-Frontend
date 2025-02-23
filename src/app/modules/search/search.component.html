@@ -1,5 +1,5 @@
 <div class="flex justify-content-center">
-  <p-card header="Buscador" class="w-8 my-3 ">
+  <p-card header="Buscador" class="w-8 my-3">
     <form [formGroup]="filterForm" class="pb-2 flex flex-column gap-3">
       <div class="grid">
         <div class="col-4 mt-3">
@@ -71,11 +71,18 @@
         (click)="onGoToDetail(recipe.recipe_id!)"
       >
         <ng-template pTemplate="header">
-          <div class="overflow-hidden">
+          <div class="overflow-hidden border-200 border-round-xl">
+            @if(!!recipe.image_url) {
             <div
-              class="bg-cover border-round-top-sm bg-center h-9rem w-full"
+              class="bg-cover border-round-top-sm bg-center h-9rem w-full border-200"
               style="background-image: url('{{ recipe.image_url }}');"
             ></div>
+            } @else {
+            <div
+              class="bg-cover border-round-top-sm bg-center h-9rem w-full border-200"
+              style="background-image: url('assets/img/default.jpg')"
+            ></div>
+            }
             <p
               class="truncate-title text-xl font-semibold px-3"
               [pTooltip]="recipe.title"
@@ -87,7 +94,7 @@
           </div>
         </ng-template>
         <div class="max-h-6rem">
-          <p class="font-semibold">Autor: {{ recipe.username }}</p>
+          <p class="font-semibold">Autor: {{ recipe.author }}</p>
           <div class="flex">
             <p-tag
               [severity]="getCategorySeverrity(recipe.category)"
@@ -96,7 +103,6 @@
           </div>
         </div>
       </p-card>
-
       }
     </div>
   </p-card>

@@ -18,7 +18,6 @@ export class AuthService {
 
   register(
     email: string,
-    username: string,
     password: string,
   ): Observable<void> {
     const promise = createUserWithEmailAndPassword(

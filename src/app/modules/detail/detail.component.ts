@@ -37,12 +37,19 @@ export default class DetailComponent {
   recipe = signal<Recipe | null>(null);
   ingredients = signal<Ingredients[]>([]);
   isLoading = signal<boolean>(true);
+  isAdmin = signal<boolean>(false)
   
   constructor() {
     this._route.paramMap.subscribe((params: any) => {
       this.recipe_id = +params.get('id');
       this._getRecipeDetail(this.recipe_id);
     });
+    this._checkIsAdmin()
+  }
+
+  private _checkIsAdmin() {
+    const token = localStorage.getItem('token-recipes');
+    this.isAdmin.set(!!token)
   }
 
   private _getRecipeDetail(recipe_id: number) {

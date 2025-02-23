@@ -79,7 +79,8 @@ export class UploadComponent implements OnChanges {
 
   async addFileFromUrl(url: string) {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { mode: 'no-cors' });
+
       const blob = await response.blob();
       const file = new File([blob], 'imagen.jpg', { type: blob.type });
 

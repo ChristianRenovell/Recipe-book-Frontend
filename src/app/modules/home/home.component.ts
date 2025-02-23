@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,6 +17,17 @@ import { SpeedDialModule } from 'primeng/speeddial';
 export default class HomeComponent {
 
   private readonly _router = inject(Router);
+
+  isAdmin = signal<boolean>(false)
+
+  constructor() {
+    this._checkIsAdmin()
+  }
+
+  private _checkIsAdmin() {
+    const token = localStorage.getItem('token-recipes');
+    this.isAdmin.set(!!token)
+  }
   
   onGoToNew() {
     this._router.navigate(['create']);

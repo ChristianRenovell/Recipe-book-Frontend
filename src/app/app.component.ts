@@ -21,4 +21,5 @@ export class AppComponent {
   constructor() {
     this._logingServices.loading$.subscribe(this.loading.set)
   }
+
 }

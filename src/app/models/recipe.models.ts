@@ -3,6 +3,7 @@ export interface Ingredients {
   ingredient?: string;
   quantity?: string;
   observations?: string;
+  ingredient_id?:string
 }
 
 export interface Recipe {

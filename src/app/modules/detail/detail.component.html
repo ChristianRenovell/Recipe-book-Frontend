@@ -18,28 +18,43 @@
               [value]="getCategoryName(recipe()?.category!)"
             />
           </div>
-          <p-button
-            [outlined]="true"
-            label="Editar"
-            icon="pi pi-pencil"
-            iconPos="right"
-            (click)="onGoToEdit()"
-          />
+          @if(isAdmin()) {
+            <p-button
+              [outlined]="true"
+              label="Editar"
+              icon="pi pi-pencil"
+              iconPos="right"
+              (click)="onGoToEdit()"
+            />
+          }
           <div>
             <div class="font-semibold text-4xl my-4">Descripcion</div>
             {{ recipe()?.description }}
           </div>
         </div>
-        <div class="flex justify-content-end w-6">
-          <p-image
-            src="{{ recipe()?.image_url }}"
-            alt="Image"
-            [preview]="true"
-            class="w-full flex justify-content-end"
-            width="100%"
-            [style]="{ display: 'block', width: '80%', height: '100%' }"
-          />
-        </div>
+        @if(!!recipe()?.image_url) {
+          <div class="flex justify-content-end w-6 border-200">
+            <p-image
+              src="{{ recipe()?.image_url }}"
+              alt="Image"
+              [preview]="true"
+              class="w-full flex justify-content-end"
+              width="100%"
+              [style]="{ display: 'block', width: '80%', height: '100%' }"
+            />
+          </div>
+        } @else {
+          <div class="flex justify-content-end w-6 border-200">
+            <p-image
+              src="assets/img/default.jpg"
+              alt="Image"
+              [preview]="true"
+              class="w-full flex justify-content-end"
+              width="100%"
+              [style]="{ display: 'block', width: '80%', height: '100%' }"
+            />
+          </div>
+        }
       </div>
       <div class="pt-5">
         <div class="font-semibold text-4xl my-3">Ingredientes</div>

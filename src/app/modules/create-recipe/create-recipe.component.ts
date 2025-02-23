@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
 import { CardModule } from 'primeng/card';
@@ -71,6 +70,7 @@ export default class CreateRecipeComponent {
 
   protected form: FormGroup = this._formBuilder.group({
     title: ['', [Validators.required]],
+    author: ['', [Validators.required]],
     category: ['', [Validators.required]],
     description: ['', [Validators.required]],
     preparation: ['', [Validators.required]],
@@ -113,7 +113,7 @@ export default class CreateRecipeComponent {
   addIngredient() {
     if (this.formIngredients.valid) {
       const newIngredient: Ingredients = {
-        id: crypto.randomUUID(), // Genera un ID único
+        ingredient_id: crypto.randomUUID(),
         ...this.formIngredients.value,
       };
       this.ingredients.update((elements) => [...elements, newIngredient]);
@@ -123,7 +123,7 @@ export default class CreateRecipeComponent {
 
   removeIngredient(id: any) {
     this.ingredients.update((elements) =>
-      elements.filter((item) => item.id !== id)
+      elements.filter((item) => item.ingredient_id!== id)
     );
   }
 

@@ -13,7 +13,7 @@
             <label for="title">Nombre de la receta</label>
           </p-floatLabel>
         </div>
-        <div class="col-12 mt-3">
+        <div class="col-6 mt-3">
           <p-floatLabel>
             <p-dropdown
               id="category"
@@ -25,6 +25,17 @@
               inputId="id"
             />
             <label for="category">Categoria</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-6 mt-3">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="author"
+              class="w-full"
+              formControlName="author"
+            />
+            <label for="author">Autor o Autora</label>
           </p-floatLabel>
         </div>
         <div class="col-12 mt-3">
@@ -83,7 +94,8 @@
                   <p-button
                     [disabled]="!this.formIngredients.valid"
                     [raised]="true"
-                    styleClass="mr-2"
+                    styleClass="w-12 gap-2 justify-content-center flex-row-reverse"
+                    icon="pi pi-plus"
                     (click)="addIngredient()"
                     >Añadir</p-button
                   >
@@ -115,25 +127,24 @@
         <div class="col-12">
           <app-upload (emitFiles)="getFiles($event)" [urlImage]="urlImage()" />
         </div>
-        <div class="col-12 flex justify-content-between">
-          <p-button
-            [disabled]="!this.form.valid"
-            [raised]="true"
-            styleClass="mr-2"
-            (click)="onSaveRecipe()"
-            >Guardar</p-button
-          >
-          <p-button
-            [disabled]="!this.form.valid"
-            [raised]="true"
-            severity="danger"
-            styleClass="mr-2"
-            (click)="onDelete()"
-            >Eliminar</p-button
-          >
-        </div>
       </div>
     </form>
+    <div class="card flex justify-content-between mt-3">
+      <p-button
+        label="Guardar"
+        [disabled]="!this.form.valid"
+        [raised]="true"
+        icon="pi pi-plus"
+        (click)="onSaveRecipe()"
+      />
+      <p-button
+        label="Eliminar"
+        [raised]="true"
+        icon="pi pi-trash"
+        (click)="onDelete()"
+        severity="danger"
+      />
+    </div>
   </p-card>
 </div>
 <p-confirmDialog />

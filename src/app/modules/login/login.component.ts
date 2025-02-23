@@ -44,7 +44,7 @@ export default class LoginComponent implements OnInit {
       const idToken = await result.user.getIdToken();
 
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
-        localStorage.setItem("token", result.token);
+        localStorage.setItem("token-recipes", result.token);
       });
       this._goToSearch()
     } catch (error) {
@@ -63,7 +63,7 @@ export default class LoginComponent implements OnInit {
       const idToken = await result.user.getIdToken();
       console.log(idToken);
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
-        localStorage.setItem("token", result.token);
+        localStorage.setItem("token-recipes", result.token);
       });
       this._goToSearch()
     } catch (error) {
@@ -78,7 +78,7 @@ export default class LoginComponent implements OnInit {
       const idToken = await result.user.getIdToken();
       console.log(idToken);
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
-        localStorage.setItem("token", result.token);
+        localStorage.setItem("token-recipes", result.token);
       });
       this._goToSearch()
     } catch (error) {
