@@ -1,12 +1,32 @@
 <div class="flex justify-content-center">
-    <img src="assets/img/recetalex.png" alt="logo" class="w-2 md:w-2 lg:w-2 xl:w-1" />
+  <img
+    src="assets/img/recetalex.png"
+    alt="logo"
+    class="w-2 md:w-2 lg:w-2 xl:w-1"
+  />
 </div>
 <div class="flex justify-content-center">
   <p-card class="w-12 md:w-12 lg:w-11 xl:w-10 mt-3 gap-3">
-    <p-button label="Buscador" icon="pi pi-search" [text]="true" (click)="onGoToSearch()"/>
-    @if(isAdmin()) {
-      <p-button label="Crear receta" icon="pi pi-plus" [text]="true" (click)="onGoToNew()" />
-    }
+    <div class="flex justify-content-between">
+      <div class="flex justify-content-start">
+        <p-button
+          label="Buscador"
+          icon="pi pi-search"
+          [text]="true"
+          (click)="onGoToSearch()"
+        />
+        @if(isAdmin()) {
+        <p-button
+          label="Crear receta"
+          icon="pi pi-plus"
+          [text]="true"
+          (click)="onGoToNew()"
+        />
+        }
+      </div>
+      <p-menu #menu [model]="items" [popup]="true" />
+      <p-button (onClick)="menu.toggle($event)" icon="pi pi-user" />
+    </div>
   </p-card>
 </div>
 <router-outlet></router-outlet>
