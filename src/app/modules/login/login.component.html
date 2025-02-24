@@ -1,58 +1,67 @@
 <div class="flex justify-content-center mt-6 pt-6">
-  <p-card class="w-3">
+  <p-card class="w-12 md:w-10 lg:w-8 xl:w-6 py-5">
     <div class="flex justify-content-center">
-      <img src="assets/img/logos.png"  alt="logo" class="w-4"/>
+      <img src="assets/img/recetalex.png" alt="logo" class="w-4" />
     </div>
     <div
       class="flex flex-column justify-content-center align-items-center gap-3 px-2 mb-5"
     >
-      <div class="text-2xl font-semibold text-center">Inicia sesión en tu cuenta</div>
+      <div class="text-2xl font-semibold text-center">
+        Inicia sesión en tu cuenta
+      </div>
       <div class="text-center">
         Bienvenido. Por favor, ingresa tus credenciales.
       </div>
     </div>
-    <div class="px-2">
-      <div class="my-3">
-        <p-floatLabel>
-          <input pInputText id="username" class="w-full" />
-          <label for="username">Email</label>
-        </p-floatLabel>
-      </div>
-      <div class="my-3">
+    <div class="flex justify-content-center">
+      <div class="grid w-9">
+        <div class="col-12 my-3">
+          <p-button
+            styleClass="flex align-items-center justify-content-center w-full"
+            [raised]="true"
+            (click)="loginWithGoogle()"
+          >
+            <img src="assets/img/google.png" alt="google" class="w-1" />
+            Iniciar sesión con Google
+          </p-button>
+        </div>
+        <div class="col-12 mt-3">
+          <p-floatLabel>
+            <input pInputText id="username" class="w-full" />
+            <label for="username">Email</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 mt-3">
           <p-floatLabel>
             <input pInputText id="username" class="w-full" />
             <label for="username">Contraseña</label>
           </p-floatLabel>
+        </div>
+        <div class="col-12 my-3">
+          <p-button
+            styleClass="flex align-items-center justify-content-center w-full"
+            [raised]="true"
+            (click)="loginWithEmailAndPassword()"
+            >Iniciar sesión</p-button
+          >
+        </div>
+        <!-- <div class="col-12 mt-3">
+          <p-button
+            size="small"
+            [text]="true"
+            severity="secondary"
+            (click)="registerWithEmailAndPassword()"
+            >Registrarse</p-button
+          >
+          <p-button
+            size="small"
+            [text]="true"
+            severity="secondary"
+            (click)="registerWithEmailAndPassword()"
+            >¿Olvidaste tu contraseña?</p-button
+          >
+        </div> -->
       </div>
     </div>
-    <div class="flex justify-content-start gap-2 px-2">
-      <p-button
-        size="small"
-        [raised]="true"
-        (click)="loginWithEmailAndPassword()"
-        >Iniciar sesión</p-button
-      >
-      <p-button
-        size="small"
-        [text]="true"
-        severity="secondary"
-        (click)="registerWithEmailAndPassword()"
-        >Registrarse</p-button
-      >
-      <p-button
-        size="small"
-        [text]="true"
-        severity="secondary"
-        (click)="registerWithEmailAndPassword()"
-        >¿Olvidaste tu contraseña?</p-button
-      >
-    </div>
-    <div class="flex flex-column gap-2 my-3 w-full px-2 pt-5">
-      <p-button styleClass="flex align-items-center justify-content-center w-full" [raised]="true" (click)="loginWithGoogle()">
-        <img src="assets/img/google.png" alt="google" class="w-1" />
-        Iniciar sesión con Google
-      </p-button>
-    </div>
-
   </p-card>
 </div>

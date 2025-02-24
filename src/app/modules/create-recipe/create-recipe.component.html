@@ -1,5 +1,5 @@
 <div class="flex justify-content-center">
-  <p-card header="Nueva receta" class="w-8 m-3">
+  <p-card header="Nueva receta" class="w-12 md:w-12 lg:w-11 xl:w-10 my-3">
     <form [formGroup]="form">
       <div class="grid">
         <div class="col-12 mt-3">
@@ -13,7 +13,7 @@
             <label for="title">Nombre de la receta</label>
           </p-floatLabel>
         </div>
-        <div class="col-6 mt-3">
+        <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
           <p-floatLabel>
             <p-dropdown
               id="category"
@@ -27,7 +27,7 @@
             <label for="category">Categoria</label>
           </p-floatLabel>
         </div>
-        <div class="col-6 mt-3">
+        <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
           <p-floatLabel>
             <input
               pInputText
@@ -55,7 +55,7 @@
           <div class="col-12 mt-3">
             <p-toolbar>
               <div class="grid">
-                <div class="col-6 mt-3">
+                <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
                   <p-floatLabel>
                     <input
                       pInputText
@@ -66,7 +66,7 @@
                     <label for="ingredient">Ingrediente</label>
                   </p-floatLabel>
                 </div>
-                <div class="col-6 mt-3">
+                <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
                   <p-floatLabel>
                     <input
                       pInputText
@@ -80,7 +80,7 @@
                 <div class="col-12 mt-3">
                   <p-floatLabel>
                     <textarea
-                      rows="5"
+                      rows="2"
                       cols="500"
                       class="w-full"
                       pInputTextarea
@@ -114,7 +114,7 @@
         <div class="col-12 mt-3">
           <p-floatLabel>
             <textarea
-              rows="5"
+              rows="8"
               cols="70"
               class="w-full"
               pInputTextarea
@@ -130,20 +130,34 @@
       </div>
     </form>
     <div class="card flex justify-content-between mt-3">
-      <p-button
-        label="Guardar"
-        [disabled]="!this.form.valid"
-        [raised]="true"
-        icon="pi pi-plus"
-        (click)="onSaveRecipe()"
-      />
-      <p-button
-        label="Eliminar"
-        [raised]="true"
-        icon="pi pi-trash"
-        (click)="onDelete()"
-        severity="danger"
-      />
+      <div class="card flex justify-content-start mt-3 gap-3">
+        <p-button
+          label="Guardar"
+          [disabled]="!this.form.valid"
+          [raised]="true"
+          icon="pi pi-plus"
+          (click)="onSaveRecipe()"
+        />
+        @if(isEditMode()) {
+          <p-button
+            label="Eliminar"
+            [raised]="true"
+            icon="pi pi-trash"
+            (click)="onDelete()"
+            severity="danger"
+          />
+        }
+      </div>
+      <div class=" p-4">
+        <p-button
+          label="Volver"
+          icon="pi pi-angle-left"
+          iconPos="right"
+          [text]="true"
+          class="w-full sm:w-auto"
+          (click)="onReturn()"
+        />
+      </div>
     </div>
   </p-card>
 </div>

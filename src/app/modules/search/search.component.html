@@ -1,8 +1,8 @@
 <div class="flex justify-content-center">
-  <p-card header="Buscador" class="w-8 my-3">
+  <p-card header="Buscador" class="w-12 md:w-12 lg:w-11 xl:w-10 my-3">
     <form [formGroup]="filterForm" class="pb-2 flex flex-column gap-3">
       <div class="grid">
-        <div class="col-4 mt-3">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4 mt-3">
           <p-floatLabel>
             <input
               pInputText
@@ -13,7 +13,7 @@
             <label for="title">Nombre</label>
           </p-floatLabel>
         </div>
-        <div class="col-3 mt-3">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3 mt-3">
           <p-floatLabel>
             <input
               pInputText
@@ -24,7 +24,7 @@
             <label for="author">Autor</label>
           </p-floatLabel>
         </div>
-        <div class="col-2 mt-3">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-2 mt-3">
           <p-floatLabel>
             <p-dropdown
               filter="true"
@@ -39,7 +39,7 @@
             <label for="category">Categoria</label>
           </p-floatLabel>
         </div>
-        <div class="col-3 mt-3">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3 mt-3">
           <p-button
             [raised]="true"
             styleClass="w-7 gap-2 justify-content-center flex-row-reverse"
@@ -62,12 +62,12 @@
 </div>
 
 <div class="flex justify-content-center mb-6">
-  <p-card header="Recetas" class="w-8">
+  <p-card header="Recetas" class="w-12 md:w-12 lg:w-11 xl:w-10">
     <div class="grid mt-2">
       @for(recipe of recipes(); track recipe.title) {
 
       <p-card
-        class="col-4 cursor-pointer p-card-class border-round-sm card-custom"
+        class="col-12 md:col-6 lg:col-4 xl:col-4 cursor-pointer p-card-class border-round-sm card-custom"
         (click)="onGoToDetail(recipe.recipe_id!)"
       >
         <ng-template pTemplate="header">

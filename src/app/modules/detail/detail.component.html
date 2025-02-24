@@ -1,88 +1,80 @@
 <div class="flex justify-content-center">
-  <p-card class="w-8 m-3">
+  <p-card class="w-12 md:w-12 lg:w-11 xl:w-10 my-3">
     @if(!isLoading()) {
-    <div class="p-4">
-      <div class="flex justify-content-between">
-        <div class="w-6">
-          <div class="font-semibold text-4xl">
-            {{ recipe()?.title }}
-          </div>
-          <div class="flex justify-content-start align-items-center my-4">
-            <div class="text-xl mr-2">Autor:</div>
-            <div class="font-semibold text-xl">
-              {{ recipe()?.author }}
-            </div>
-            <p-tag
-              class="ml-4"
-              [severity]="getCategorySeverrity(recipe()?.category!)"
-              [value]="getCategoryName(recipe()?.category!)"
-            />
-          </div>
-          @if(isAdmin()) {
-            <p-button
-              [outlined]="true"
-              label="Editar"
-              icon="pi pi-pencil"
-              iconPos="right"
-              (click)="onGoToEdit()"
-            />
-          }
-          <div>
-            <div class="font-semibold text-4xl my-4">Descripcion</div>
-            {{ recipe()?.description }}
-          </div>
+    <div
+      class="flex flex-row-reverse flex-wrap flex-row-reverse justify-content-between"
+    >
+      <div class="w-12">
+        <div class="font-semibold text-3xl md:text-4xl">
+          {{ recipe()?.title }}
         </div>
-        @if(!!recipe()?.image_url) {
-          <div class="flex justify-content-end w-6 border-200">
-            <p-image
-              src="{{ recipe()?.image_url }}"
-              alt="Image"
-              [preview]="true"
-              class="w-full flex justify-content-end"
-              width="100%"
-              [style]="{ display: 'block', width: '80%', height: '100%' }"
-            />
-          </div>
-        } @else {
-          <div class="flex justify-content-end w-6 border-200">
-            <p-image
-              src="assets/img/default.jpg"
-              alt="Image"
-              [preview]="true"
-              class="w-full flex justify-content-end"
-              width="100%"
-              [style]="{ display: 'block', width: '80%', height: '100%' }"
-            />
-          </div>
-        }
-      </div>
-      <div class="pt-5">
-        <div class="font-semibold text-4xl my-3">Ingredientes</div>
-        <p-table
-          [value]="ingredients()"
-          [tableStyle]="{ 'min-width': '50rem' }"
+        <div
+          class="flex flex-column sm:flex-row align-items-start sm:align-items-center my-4 gap-2"
         >
-          <ng-template pTemplate="header">
-            <tr class="flex">
-              <th class="w-3">Ingrediente</th>
-              <th class="w-2">Cantidad</th>
-              <th class="w-7">Observaciones</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-product>
-            <tr class="flex">
-              <td class="w-3">{{ product.ingredient }}</td>
-              <td class="w-2">{{ product.quantity }}</td>
-              <td class="w-7">{{ product.observations }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <div class="py-5 mb-3">
-        <div class="font-semibold text-4xl my-3">Preparación</div>
-        {{ recipe()?.preparation }}
+          <div class="text-xl">Autor:</div>
+          <div class="font-semibold text-xl">
+            {{ recipe()?.author }}
+          </div>
+          <p-tag
+            class="sm:ml-4"
+            [severity]="getCategorySeverrity(recipe()?.category!)"
+            [value]="getCategoryName(recipe()?.category!)"
+          />
+        </div>
+        @if(isAdmin()) {
+        <p-button
+          [outlined]="true"
+          label="Editar"
+          icon="pi pi-pencil"
+          iconPos="right"
+          (click)="onGoToEdit()"
+          class="w-full sm:w-auto"
+        />
+        }
+        <div class="mt-4">
+          <div class="font-semibold text-3xl md:text-4xl my-3">Descripción</div>
+          {{ recipe()?.description }}
+        </div>
       </div>
     </div>
+
+    <!-- Sección de ingredientes -->
+    <div class="pt-5">
+      <div class="font-semibold text-3xl md:text-4xl my-3">Ingredientes</div>
+      <p-table [value]="ingredients()" class="w-full" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-4">Ingrediente</th>
+            <th class="w-3">Cantidad</th>
+            <th class="w-5">Observaciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>{{ product.ingredient }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.observations }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Sección de preparación -->
+    <div class="py-5 mb-3">
+      <div class="font-semibold text-3xl md:text-4xl my-3">Preparación</div>
+      {{ recipe()?.preparation }}
+    </div>
+    <div class="w-12 flex justify-content-center">
+      <p-image
+        [src]="
+          recipe()?.image_url ? recipe()?.image_url : 'assets/img/default.jpg'
+        "
+        class="flex justify-content-end"
+        alt="Imagen"
+        [preview]="true"
+      />
+    </div>
+
     }
     <div class="flex justify-content-end p-4">
       <p-button
@@ -90,6 +82,7 @@
         icon="pi pi-angle-left"
         iconPos="right"
         [text]="true"
+        class="w-full sm:w-auto"
         (click)="onReturn()"
       />
     </div>

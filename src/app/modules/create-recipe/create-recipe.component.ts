@@ -4,6 +4,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { Location } from '@angular/common'; 
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -60,12 +61,13 @@ export default class CreateRecipeComponent {
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _confirmationService = inject(ConfirmationService);
+  private readonly _location = inject(Location);
 
   ingredients = signal<Ingredients[]>([]);
   urlImage = signal<string | null>(null);
+  isEditMode = signal<boolean | null>(false);
 
   protected categoryOptions = CATEGORIES;
-  protected accessType!: number;
   protected recipe_id!: number;
 
   protected form: FormGroup = this._formBuilder.group({
@@ -83,8 +85,9 @@ export default class CreateRecipeComponent {
   });
 
   constructor() {
-    this.accessType = this._route.snapshot.data['accessType'];
-    if (this.accessType === EDIT_MODE) {
+    const accessType = this._route.snapshot.data['accessType'];
+    this.isEditMode.set(accessType === EDIT_MODE)
+    if (this.isEditMode()) {
       this._route.paramMap.subscribe((params: any) => {
         this.recipe_id = +params.get('id');
         if (this.recipe_id) {
@@ -92,22 +95,6 @@ export default class CreateRecipeComponent {
         }
       });
     }
-  }
-
-  private _getRecipeDetail(recipe_id: number) {
-    this._loadingService.show();
-    this._recipeService
-      .getRecipe(recipe_id)
-      .pipe(
-        finalize(() => {
-          this._loadingService.hide();
-        })
-      )
-      .subscribe((result) => {
-        this.form.patchValue({ ...result });
-        if (result.ingredients) this.ingredients.set(result.ingredients);
-        if (result.image_url) this.urlImage.set(result.image_url);
-      });
   }
 
   addIngredient() {
@@ -150,12 +137,56 @@ export default class CreateRecipeComponent {
           formData.append('files', file);
         });
       }
-      if (this.accessType === EDIT_MODE) {
+      if (this.isEditMode()) {
         this._updateRecipe(formData);
       } else {
         this._createRecipe(formData);
       }
     }
+  }
+
+  getFiles(event: any) {
+    this.files = event;
+  }
+
+  onDelete() {
+    this._confirmationService.confirm({
+      message: '¿Estás seguro de querer eliminar la receta?',
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Eliminar',
+      rejectLabel: 'Cancelar',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this._loadingService.show();
+        this._recipeService
+          .deleteRecipes(this.recipe_id)
+          .pipe(finalize(() => this._loadingService.hide()))
+          .subscribe(()=>  this._router.navigate(['search']));
+      },
+    });
+  }
+
+  onReturn() {
+    this._location.back();
+  }
+
+  private _getRecipeDetail(recipe_id: number) {
+    this._loadingService.show();
+    this._recipeService
+      .getRecipe(recipe_id)
+      .pipe(
+        finalize(() => {
+          this._loadingService.hide();
+        })
+      )
+      .subscribe((result) => {
+        this.form.patchValue({ ...result });
+        if (result.ingredients) this.ingredients.set(result.ingredients);
+        if (result.image_url) this.urlImage.set(result.image_url);
+      });
   }
 
   private _updateRecipe(formData: any) {
@@ -192,30 +223,6 @@ export default class CreateRecipeComponent {
 
   private _goToDetall(recipe_id: number) {
     this._router.navigate(['detail/' + recipe_id]);
-  }
-
-  getFiles(event: any) {
-    this.files = event;
-  }
-
-  onDelete() {
-    this._confirmationService.confirm({
-      message: '¿Estás seguro de querer eliminar la receta?',
-      header: 'Confirmación',
-      icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'none',
-      rejectIcon: 'none',
-      acceptLabel: 'Eliminar',
-      rejectLabel: 'Cancelar',
-      rejectButtonStyleClass: 'p-button-text',
-      accept: () => {
-        this._loadingService.show();
-        this._recipeService
-          .deleteRecipes(this.recipe_id)
-          .pipe(finalize(() => this._loadingService.hide()))
-          .subscribe(()=>  this._router.navigate(['search']));
-      },
-    });
   }
 
   private _removeTemporalId(ingredients: Ingredients[] | []) {
