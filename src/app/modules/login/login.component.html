@@ -13,55 +13,80 @@
         Bienvenido. Por favor, ingresa tus credenciales.
       </div>
     </div>
-    <div class="flex justify-content-center">
-      <div class="grid w-9">
-        <div class="col-12 my-3">
-          <p-button
-            styleClass="flex align-items-center justify-content-center w-full"
-            [raised]="true"
-            (click)="loginWithGoogle()"
-          >
-            <img src="assets/img/google.png" alt="google" class="w-1" />
-            Iniciar sesión con Google
-          </p-button>
+    <form [formGroup]="form">
+      <div class="flex justify-content-center">
+        <div class="grid w-9">
+          <div class="col-12 my-3">
+            <p-button
+              styleClass="flex align-items-center justify-content-center w-full"
+              [raised]="true"
+              (click)="loginWithGoogle()"
+            >
+              <img src="assets/img/google.png" alt="google" class="w-1" />
+              Iniciar sesión con Google
+            </p-button>
+          </div>
+          <div class="col-12 mt-3">
+            <p-floatLabel>
+              <input
+                pInputText
+                id="email"
+                class="w-full"
+                formControlName="email"
+              />
+              <label for="email">Email</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="col-12 mt-3">
+            <p-floatLabel>
+              <input
+                pInputText
+                id="password"
+                class="w-full"
+                formControlName="password"
+                type="password"
+              />
+              <label for="password">Contraseña</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 mt-3">
+            @if(isRegistre()) {
+            <p-checkbox formControlName="check" binary="true" inputId="check" />
+            <label for="ny" class="ml-2"
+              >Acepto los Términos y Condiciones y la Política de Privacidad de
+              Recetalex. Al marcar esta casilla, autorizo el tratamiento de mis
+              datos personales conforme a lo establecido en dichos documentos.
+            </label>
+            }
+          </div>
+          <div class="col-12">
+            <p-button
+              [disabled]="!form.valid"
+              styleClass="flex align-items-center justify-content-center w-full"
+              [raised]="true"
+              (click)="
+                isRegistre()
+                  ? registerWithEmailAndPassword()
+                  : loginWithEmailAndPassword()
+              "
+              >{{ isRegistre() ? "Registrarse" : "Iniciar sesión" }}</p-button
+            >
+          </div>
+          <div class="col-12 mt-3">
+            <p-button
+              styleClass="flex align-items-center justify-content-center w-full"
+              size="small"
+              [text]="true"
+              severity="secondary"
+              (click)="onChangeRegistryLogin()"
+              >{{
+                isRegistre() ? "Iniciar sesión aquí" : "Crear una cuenta"
+              }}</p-button
+            >
+          </div>
         </div>
-        <div class="col-12 mt-3">
-          <p-floatLabel>
-            <input pInputText id="username" class="w-full" />
-            <label for="username">Email</label>
-          </p-floatLabel>
-        </div>
-        <div class="col-12 mt-3">
-          <p-floatLabel>
-            <input pInputText id="username" class="w-full" />
-            <label for="username">Contraseña</label>
-          </p-floatLabel>
-        </div>
-        <div class="col-12 my-3">
-          <p-button
-            styleClass="flex align-items-center justify-content-center w-full"
-            [raised]="true"
-            (click)="loginWithEmailAndPassword()"
-            >Iniciar sesión</p-button
-          >
-        </div>
-        <!-- <div class="col-12 mt-3">
-          <p-button
-            size="small"
-            [text]="true"
-            severity="secondary"
-            (click)="registerWithEmailAndPassword()"
-            >Registrarse</p-button
-          >
-          <p-button
-            size="small"
-            [text]="true"
-            severity="secondary"
-            (click)="registerWithEmailAndPassword()"
-            >¿Olvidaste tu contraseña?</p-button
-          >
-        </div> -->
       </div>
-    </div>
+    </form>
   </p-card>
 </div>
