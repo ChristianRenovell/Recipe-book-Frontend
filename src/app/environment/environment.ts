@@ -10,5 +10,6 @@ export const environment = {
       appId: "1:313301543562:web:779695ef3c6943891ddb73",
       measurementId: "G-E7M8HJ5J4J"
     },
-    apiUrl: 'http://localhost:3000'
+    //apiUrl: 'http://localhost:3000'
+    apiUrl: 'https://recipe-book-backend-2825.onrender.com'
   };
