@@ -83,6 +83,7 @@ export default class DetailComponent {
     )?.name;
     return !!severity ? severity : '';
   }
+  
 
   onReturn() {
     this._router.navigate(['search']);
