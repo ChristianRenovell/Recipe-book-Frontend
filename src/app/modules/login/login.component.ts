@@ -61,6 +61,10 @@ export default class LoginComponent implements OnInit {
     initializeApp(environment.firebaseConfig);
   }
 
+  onRedirectToSearch() {
+    this._goToSearch();
+  }
+
   async loginWithGoogle() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -71,8 +75,8 @@ export default class LoginComponent implements OnInit {
 
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
         localStorage.setItem('token-recipes', result.token);
+        this._goToSearch();
       });
-      this._goToSearch();
     } catch (error) {
       console.error('Error en loginWithGoogle:', error);
     }
@@ -92,11 +96,10 @@ export default class LoginComponent implements OnInit {
           this.form.value.password
         );
         const idToken = await result.user.getIdToken();
-        console.log(idToken);
         this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
           localStorage.setItem('token-recipes', result.token);
+          this._goToSearch();
         });
-        this._goToSearch();
       } catch (error) {
         console.error(error);
       }
@@ -115,8 +118,8 @@ export default class LoginComponent implements OnInit {
       console.log(idToken);
       this._loginServices.login(idToken).subscribe((result: LoginResponse) => {
         localStorage.setItem('token-recipes', result.token);
+        this._goToSearch();
       });
-      this._goToSearch();
     } catch (error) {
       console.error(error);
     }

@@ -1,7 +1,12 @@
 <div class="flex justify-content-center mt-6 pt-6">
   <p-card class="w-12 md:w-10 lg:w-8 xl:w-6 py-5">
     <div class="flex justify-content-center">
-      <img src="assets/img/recetalex.png" alt="logo" class="w-4" />
+      <img
+        src="assets/img/recetalex.png"
+        alt="logo"
+        class="w-4 cursor-pointer p-card-class border-round-sm card-customs"
+        (click)="onRedirectToSearch()"
+      />
     </div>
     <div
       class="flex flex-column justify-content-center align-items-center gap-3 px-2 mb-5"
@@ -16,7 +21,7 @@
     <form [formGroup]="form">
       <div class="flex justify-content-center">
         <div class="grid w-9">
-          <div class="col-12 my-3">
+          <!-- <div class="col-12 my-3">
             <p-button
               styleClass="flex align-items-center justify-content-center w-full"
               [raised]="true"
@@ -25,7 +30,7 @@
               <img src="assets/img/google.png" alt="google" class="w-1" />
               Iniciar sesión con Google
             </p-button>
-          </div>
+          </div> -->
           <div class="col-12 mt-3">
             <p-floatLabel>
               <input
