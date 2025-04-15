@@ -2,11 +2,23 @@
   <p-card class="w-12 md:w-12 lg:w-11 xl:w-10 my-3">
     @if(!isLoading()) {
     <div
-      class="flex flex-row-reverse flex-wrap flex-row-reverse justify-content-between"
+      class="flex flex-row-reverse flex-wrap flex-row-reverse justify-content-between p-4"
     >
       <div class="w-12">
-        <div class="font-semibold text-3xl md:text-4xl">
-          {{ recipe()?.title }}
+        <div class="flex justify-content-between">
+          <div class="font-semibold text-3xl md:text-4xl W-10">
+            {{ recipe()?.title }}
+          </div>
+          @if(isAdmin()) {
+            <p-button
+              [outlined]="true"
+              label="Editar"
+              icon="pi pi-pencil"
+              iconPos="right"
+              (click)="onGoToEdit()"
+              class="w-2 sm:w-auto"
+            />
+            }
         </div>
         <div
           class="flex flex-column sm:flex-row align-items-start sm:align-items-center my-4 gap-2"
@@ -21,26 +33,19 @@
             [value]="getCategoryName(recipe()?.category!)"
           />
         </div>
-        @if(isAdmin()) {
-        <p-button
-          [outlined]="true"
-          label="Editar"
-          icon="pi pi-pencil"
-          iconPos="right"
-          (click)="onGoToEdit()"
-          class="w-full sm:w-auto"
-        />
+   
+        @if(recipe()?.description) {
+          <div>
+            <div class="font-semibold text-xl md:text-1xl my-3">Descripción</div>
+            {{ recipe()?.description }}
+          </div>
         }
-        <div class="mt-4">
-          <div class="font-semibold text-3xl md:text-4xl my-3">Descripción</div>
-          {{ recipe()?.description }}
-        </div>
       </div>
     </div>
 
     <!-- Sección de ingredientes -->
-    <div class="pt-5">
-      <div class="font-semibold text-3xl md:text-4xl my-3">Ingredientes</div>
+    <div class="px-4">
+      <div class="font-semibold text-xl md:text-1xl my-3">Ingredientes</div>
       <p-table [value]="ingredients()" class="w-full" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
@@ -60,9 +65,15 @@
     </div>
 
     <!-- Sección de preparación -->
-    <div class="py-5 mb-3">
-      <div class="font-semibold text-3xl md:text-4xl my-3">Preparación</div>
-      {{ recipe()?.preparation }}
+    <div class="py-5 mb-3 px-4">
+      <div class="font-semibold text-xl md:text-1xl my-3">Preparación</div>
+      @for( step of steps(); track $index) {
+        <div class="my-2">
+          <span class="font-semibold text-xl md:text-1xl my-3">{{ $index + 1 }} </span>
+          {{ step.step_description }}
+          <br/>
+        </div>
+      }
     </div>
     <div class="w-12 flex justify-content-center">
       <p-image

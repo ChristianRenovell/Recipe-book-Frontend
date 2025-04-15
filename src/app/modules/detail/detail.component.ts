@@ -13,7 +13,7 @@ import { LoadingService } from '../../core/services/loading.service';
 import { finalize } from 'rxjs/operators';
 import { ImageModule } from 'primeng/image';
 import { TableModule } from 'primeng/table';
-import { Ingredients, Recipe } from '../../models/recipe.models';
+import { Ingredients, Recipe, Step } from '../../models/recipe.models';
 import { CATEGORIES } from '../../constants/categories';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
@@ -36,6 +36,7 @@ export default class DetailComponent {
   protected recipe_id!:number;
   recipe = signal<Recipe | null>(null);
   ingredients = signal<Ingredients[]>([]);
+  steps = signal<Step[]>([]);
   isLoading = signal<boolean>(true);
   isAdmin = signal<boolean>(false)
   
@@ -65,6 +66,8 @@ export default class DetailComponent {
       .subscribe((result) => {
         this.recipe.set(result);
         if (result.ingredients) this.ingredients.set(result.ingredients);
+        if (result.steps) this.steps.set(result.steps);
+
       });
   }
 

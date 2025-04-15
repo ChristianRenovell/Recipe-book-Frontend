@@ -1,0 +1,37 @@
+<p-table
+  [value]="steps"
+  [reorderableColumns]="true"
+  [tableStyle]="{ 'min-width': '50rem' }"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th class="w-1 bg-white surface-0" ></th>
+      <th class="w-1 bg-white surface-0" >Paso</th>
+      <th class="w-9 bg-white surface-0">Descripción</th>
+      <th class="w-1 bg-white surface-0"></th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-step
+    let-columns="columns"
+    let-index="rowIndex"
+  >
+    <tr [pReorderableRow]="index">
+      <td class="w-1">
+        <span class="pi pi-bars" pReorderableRowHandle></span>
+      </td>
+      <td class="w-1">{{ index + 1 }}</td>
+      <td class="w-9">{{ step.step_description }}</td>
+      <td class="text-right pr-2 w-1">
+        <p-button
+          [text]="true"
+          rounded="true"
+          severity="danger"
+          icon="pi pi-trash"
+          (click)="deleteStep(step.step_id)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

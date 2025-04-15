@@ -54,8 +54,9 @@
         <form [formGroup]="formIngredients">
           <div class="col-12 mt-3">
             <p-toolbar>
+              <h3 class="col-12">Añadir Ingredientes</h3>
               <div class="grid">
-                <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
+                <div class="col-12 md:col-12 lg:col-6 xl:col-6">
                   <p-floatLabel>
                     <input
                       pInputText
@@ -66,7 +67,7 @@
                     <label for="ingredient">Ingrediente</label>
                   </p-floatLabel>
                 </div>
-                <div class="col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
+                <div class="col-12 md:col-12 lg:col-6 xl:col-6">
                   <p-floatLabel>
                     <input
                       pInputText
@@ -101,28 +102,55 @@
                   >
                 </div>
               </div>
+              @if(!!ingredients().length) {
+              <app-ingredient-table
+                class="w-full px-2"
+                [ingredients]="ingredients()"
+                (removeIngredient)="removeIngredient($event)"
+              />
+              }
             </p-toolbar>
           </div>
         </form>
-        @if(!!ingredients().length) {
-        <app-ingredient-table
-          class="w-full px-2"
-          [ingredients]="ingredients()"
-          (removeIngredient)="removeIngredient($event)"
-        />
-        }
+
         <div class="col-12 mt-3">
-          <p-floatLabel>
-            <textarea
-              rows="8"
-              cols="70"
-              class="w-full"
-              pInputTextarea
-              id="preparation"
-              formControlName="preparation"
-            ></textarea>
-            <label for="preparation">Preparación</label>
-          </p-floatLabel>
+          <form [formGroup]="formSteps">
+            <p-toolbar>
+              <h3 class="col-12">Añadir Pasos</h3>
+
+              <div class="col-12">
+                <p-floatLabel>
+                  <textarea
+                    rows="3"
+                    cols="70"
+                    class="w-full"
+                    id="step_description"
+                    formControlName="step_description"
+                    pInputTextarea
+                  ></textarea>
+                  <label for="step_description">Descripción</label>
+                </p-floatLabel>
+              </div>
+              <div class="col-12">
+                <p-button
+                  [disabled]="!this.formSteps.valid"
+                  [raised]="true"
+                  styleClass="w-full"
+                  icon="pi pi-plus"
+                  (click)="onAddStep()"
+                  >Añadir</p-button
+                >
+              </div>
+
+              @if(!!steps().length) {
+                <app-steps-table
+                  class="w-full px-2"
+                  [steps]="steps()"
+                  (removeStep)="removeStep($event)"
+                />
+                }
+            </p-toolbar>
+          </form>
         </div>
         <div class="col-12">
           <app-upload (emitFiles)="getFiles($event)" [urlImage]="urlImage()" />
@@ -139,16 +167,16 @@
           (click)="onSaveRecipe()"
         />
         @if(isEditMode()) {
-          <p-button
-            label="Eliminar"
-            [raised]="true"
-            icon="pi pi-trash"
-            (click)="onDelete()"
-            severity="danger"
-          />
+        <p-button
+          label="Eliminar"
+          [raised]="true"
+          icon="pi pi-trash"
+          (click)="onDelete()"
+          severity="danger"
+        />
         }
       </div>
-      <div class=" p-4">
+      <div class="p-4">
         <p-button
           label="Volver"
           icon="pi pi-angle-left"

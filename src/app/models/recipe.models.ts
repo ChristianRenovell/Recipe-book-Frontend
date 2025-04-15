@@ -6,6 +6,11 @@ export interface Ingredients {
   ingredient_id?:string
 }
 
+export interface Step {
+  step_id: string;
+  step_description: string;
+}
+
 export interface Recipe {
   recipe_id?: number;
   title: string;
@@ -14,6 +19,7 @@ export interface Recipe {
   author: string | null;
   description: string | null;
   ingredients: Ingredients[] | null;
+  steps: Step[] | null;
   category: number;
   preparation: string | null
 }

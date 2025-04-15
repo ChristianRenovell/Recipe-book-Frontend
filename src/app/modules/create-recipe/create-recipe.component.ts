@@ -18,7 +18,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Ingredients } from '../../models/recipe.models';
+import { Ingredients, Step } from '../../models/recipe.models';
 import { IngredientTableComponent } from '../ingredient-table/ingredient-table.component';
 import { CATEGORIES, EDIT_MODE } from '../../constants/categories';
 import { UploadComponent } from '../upload/upload.component';
@@ -29,6 +29,7 @@ import { ToastModule } from 'primeng/toast';
 import { LoadingService } from '../../core/services/loading.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { StepsTableComponent } from '../steps-table/steps-table.component';
 
 @Component({
   selector: 'app-create-recipe',
@@ -45,7 +46,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     IngredientTableComponent,
     UploadComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    StepsTableComponent
   ],
   templateUrl: './create-recipe.component.html',
   providers: [MessageService, ConfirmationService],
@@ -64,6 +66,7 @@ export default class CreateRecipeComponent {
   private readonly _location = inject(Location);
 
   ingredients = signal<Ingredients[]>([]);
+  steps = signal<Step[]>([]);
   urlImage = signal<string | null>(null);
   isEditMode = signal<boolean | null>(false);
 
@@ -74,14 +77,17 @@ export default class CreateRecipeComponent {
     title: ['', [Validators.required]],
     author: ['', [Validators.required]],
     category: ['', [Validators.required]],
-    description: ['', [Validators.required]],
-    preparation: ['', [Validators.required]],
+    description: [''],
   });
 
   protected formIngredients: FormGroup = this._formBuilder.group({
     ingredient: ['', { validators: [Validators.required] }],
     quantity: ['', [Validators.required]],
-    observations: ['', [Validators.required]],
+    observations: [''],
+  });
+
+  protected formSteps: FormGroup = this._formBuilder.group({
+    step_description: ['', { validators: [Validators.required] }],
   });
 
   constructor() {
@@ -95,6 +101,21 @@ export default class CreateRecipeComponent {
         }
       });
     }
+  }
+
+  onAddStep() {
+    if (this.formSteps.valid) {
+      const newStep = {
+        step_id: crypto.randomUUID(),
+        ...this.formSteps.value,
+      };
+      this.steps.update((elements) => [...elements, newStep]);
+      this.formSteps.reset();
+    }
+  }
+
+  removeStep(id: string) {
+    this.steps.update((elements) => elements.filter((step) => step.step_id !== id));
   }
 
   addIngredient() {
@@ -122,6 +143,11 @@ export default class CreateRecipeComponent {
       Object.keys(this.form.value).forEach((key) => {
         formData.append(key, this.form.value[key]);
       });
+
+      formData.append(
+        'steps',
+        JSON.stringify(this.steps())
+      );
 
       formData.append(
         'ingredients',
@@ -185,6 +211,7 @@ export default class CreateRecipeComponent {
       .subscribe((result) => {
         this.form.patchValue({ ...result });
         if (result.ingredients) this.ingredients.set(result.ingredients);
+        if (result.steps) this.steps.set(result.steps);
         if (result.image_url) this.urlImage.set(result.image_url);
       });
   }
