@@ -143,10 +143,9 @@ export default class CreateRecipeComponent {
       Object.keys(this.form.value).forEach((key) => {
         formData.append(key, this.form.value[key]);
       });
-
       formData.append(
         'steps',
-        JSON.stringify(this.steps())
+        JSON.stringify(this._addStepNumberToSteps(this.steps()))
       );
 
       formData.append(
@@ -170,6 +169,17 @@ export default class CreateRecipeComponent {
       }
     }
   }
+
+  private _addStepNumberToSteps(steps: Step[]): Step[] {
+    if (!steps || steps.length === 0) {
+      return [];
+    }
+    return steps.map((step, index) => ({
+      ...step,
+      step_number: index + 1,
+    }));
+  }
+
 
   getFiles(event: any) {
     this.files = event;

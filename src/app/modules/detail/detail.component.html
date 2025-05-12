@@ -5,23 +5,25 @@
       class="flex flex-row-reverse flex-wrap flex-row-reverse justify-content-between p-4"
     >
       <div class="w-12">
-        <div class="flex justify-content-between">
-          <div class="font-semibold text-3xl md:text-4xl W-10">
-            {{ recipe()?.title }}
-          </div>
-          @if(isAdmin()) {
-            <p-button
-              [outlined]="true"
-              label="Editar"
-              icon="pi pi-pencil"
-              iconPos="right"
-              (click)="onGoToEdit()"
-              class="w-2 sm:w-auto"
-            />
-            }
-        </div>
         <div
-          class="flex flex-column sm:flex-row align-items-start sm:align-items-center my-4 gap-2"
+          class="font-semibold text-3xl md:text-4xl w-12 overflow-hidden col-12"
+          style="word-break: break-word"
+        >
+          {{ recipe()?.title }}
+        </div>
+        @if(isAdmin()) {
+        <p-button
+          [outlined]="true"
+          label="Editar"
+          icon="pi pi-pencil"
+          iconPos="right"
+          (click)="onGoToEdit()"
+          class="w-2 sm:w-auto"
+        />
+
+        }
+        <div
+          class="flex flex-column sm:flex-row align-items-start sm:align-items-center my-2 gap-2 col-12"
         >
           <div class="text-xl">Autor:</div>
           <div class="font-semibold text-xl">
@@ -33,12 +35,15 @@
             [value]="getCategoryName(recipe()?.category!)"
           />
         </div>
-   
+
         @if(recipe()?.description) {
-          <div>
-            <div class="font-semibold text-xl md:text-1xl my-3">Descripción</div>
-            {{ recipe()?.description }}
-          </div>
+        <div
+          class="overflow-hidden w-12 col-12"
+          style="word-break: break-word; white-space: pre-wrap"
+        >
+          <div class="font-semibold text-xl md:text-1xl my-2">Descripción</div>
+          {{ recipe()?.description }}
+        </div>
         }
       </div>
     </div>
@@ -68,21 +73,22 @@
     <div class="py-5 mb-3 px-4">
       <div class="font-semibold text-xl md:text-1xl my-3">Preparación</div>
       @for( step of steps(); track $index) {
-        <div class="my-2">
-          <span class="font-semibold text-xl md:text-1xl my-3">{{ $index + 1 }} </span>
-          {{ step.step_description }}
-          <br/>
-        </div>
+      <div class="my-2">
+        <span class="font-semibold text-xl md:text-1xl my-3"
+          >{{ $index + 1 }}
+        </span>
+        {{ step.step_description }}
+        <br />
+      </div>
       }
     </div>
     <div class="w-12 flex justify-content-center">
-      <p-image
+      <img
         [src]="
           recipe()?.image_url ? recipe()?.image_url : 'assets/img/default.jpg'
         "
-        class="flex justify-content-end"
+        class="object-contain w-9 h-9"
         alt="Imagen"
-        [preview]="true"
       />
     </div>
 
